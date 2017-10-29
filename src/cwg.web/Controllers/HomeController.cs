@@ -1,7 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
+
+using cwg.web.Models;
 
 using Microsoft.AspNetCore.Mvc;
+
+using VirusTotalNET;
+using VirusTotalNET.Results;
 
 namespace cwg.web.Controllers
 {
@@ -15,8 +22,27 @@ namespace cwg.web.Controllers
         {
             new Random((int)DateTime.Now.Ticks).NextBytes(bytes);
         }
+        
+        private async Task<FileReport> getAVListAsync(byte[] fileBytes)
+        {
+            try
+            {
+                var virusTotal = new VirusTotal("7973cee3452a6c987ef19044ca03b79258968278e919167ba6d8facc6e91dd8d")
+                {
+                    UseTLS = true
+                };
 
-        public IActionResult Generate()
+                var result = await virusTotal.GetFileReportAsync(fileBytes);
+
+                return result.Scans == null ? null : result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<IActionResult> Generate()
         {
             var originalBytes = System.IO.File.ReadAllBytes("sourcePE");
 
@@ -36,10 +62,13 @@ namespace cwg.web.Controllers
                 sha1Sum = BitConverter.ToString(shaManager.ComputeHash(originalBytes)).Replace("-", "");
             }
 
-            return new FileContentResult(originalBytes, "application/octet-stream")
+            System.IO.File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.exe"), originalBytes);
+
+            return View("Generation", new GenerationResponseModel
             {
-                FileDownloadName = $"{sha1Sum}.exe"
-            };
+                FileName = $"{sha1Sum}.exe",
+                FileReportResult = await getAVListAsync(originalBytes)
+            });
         }
     }
 }

@@ -1,0 +1,29 @@
+﻿@using VirusTotalNET.Objects
+@model cwg.web.Models.GenerationResponseModel
+
+<div>
+    <h3>Cleanware Generation Results</h3>
+
+    <p>
+        <h4>Generated @Model.FileName</h4>
+
+        <a href="/file/@Model.FileName" role="button" class="btn btn-info btn-lg">Download File</a><br/><br/>
+
+        @if (Model.FileReportResult == null)
+        {
+            <h4>No Vendor Information</h4>
+        }
+        else
+        {
+            <h4>@Model.FileReportResult.Positives/@Model.FileReportResult.Total vendors falsed</h4>
+
+            foreach (var vendorName in @Model.FileReportResult.Scans)
+            {
+                <h4>@vendorName - @Model.FileReportResult.Scans[vendorName.Key].Result</h4>
+            }
+        }
+
+        <br/><br/>
+        <a href="/Home/Generate" role="button" class="btn btn-success">generate another</a>
+    </p>
+</div>
