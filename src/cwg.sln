@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27019.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cwg.web", "cwg.web\cwg.web.csproj", "{68121684-A924-4BAC-BD93-2BDA8E053F5E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68121684-A924-4BAC-BD93-2BDA8E053F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68121684-A924-4BAC-BD93-2BDA8E053F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68121684-A924-4BAC-BD93-2BDA8E053F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68121684-A924-4BAC-BD93-2BDA8E053F5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7035242C-F146-44EE-9F9E-EC3858A6F2DE}
+	EndGlobalSection
+EndGlobal
