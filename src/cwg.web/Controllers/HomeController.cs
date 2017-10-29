@@ -3,9 +3,11 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
+using cwg.web.Common;
 using cwg.web.Models;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 using VirusTotalNET;
 using VirusTotalNET.Results;
@@ -14,6 +16,13 @@ namespace cwg.web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly Settings _settingsFile;
+
+        public HomeController(IOptions<Settings> settingsFile)
+        {
+            _settingsFile = settingsFile.Value;
+        }
+
         public IActionResult Index() => View();
         
         private int getRandomInt(int min = 1, int max = 100) => new Random((int)DateTime.Now.Ticks).Next(min, max);
@@ -27,7 +36,7 @@ namespace cwg.web.Controllers
         {
             try
             {
-                var virusTotal = new VirusTotal("7973cee3452a6c987ef19044ca03b79258968278e919167ba6d8facc6e91dd8d")
+                var virusTotal = new VirusTotal(_settingsFile.VTKey)
                 {
                     UseTLS = true
                 };
