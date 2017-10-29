@@ -1,0 +1,31 @@
+﻿@model VirusTotalNET.Results.FileReport
+
+<div class="row">
+    <div class="vtinfolabel">MD5</div>
+    <div class="vtinfovalue">@Model.MD5</div>
+</div>
+
+<div class="row">
+    <div class="vtinfolabel">SHA256</div>
+    <div class="vtinfovalue">@Model.SHA256</div>
+</div>
+
+<div class="row">
+    <div class="vtinfolabel">FALSE POSITIVES</div>
+    <div class="vtinfovalue">@Model.Positives</div>
+</div>
+
+<div class="row">
+    <div class="vtinfolabel">TOTAL VENDORS</div>
+    <div class="vtinfovalue">@Model.Total</div>
+</div>
+
+<h4>Vendor Results</h4>
+
+@foreach (var vendor in Model.Scans.Keys)
+{
+    <div class="row">
+        <div class="vtinfolabel">@vendor</div>
+        <div class="vtinfovalue">@Model.Scans[vendor].Result</div>
+    </div>
+}

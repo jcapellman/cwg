@@ -1,11 +1,9 @@
-﻿using VirusTotalNET.Results;
-
-namespace cwg.web.Models
+﻿namespace cwg.web.Models
 {
     public class GenerationResponseModel
     {
-        public string FileName { get; set; }
+        public string SHA1 { get; set; }
 
-        public FileReport FileReportResult { get; set; }
+        public string FileName { get; set; }
     }
 }

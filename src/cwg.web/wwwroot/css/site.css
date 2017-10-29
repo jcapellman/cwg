@@ -19,3 +19,13 @@ footer {
     text-align: center;
     font-weight: bold;
 }
+
+.vtinfolabel {
+    font-weight: bold;
+    float: left;
+    width: 50px;
+}
+
+.vtinfovalue {
+    float: left;
+}

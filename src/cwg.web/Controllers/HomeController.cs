@@ -11,7 +11,6 @@ using Microsoft.Extensions.Options;
 
 using VirusTotalNET;
 using VirusTotalNET.ResponseCodes;
-using VirusTotalNET.Results;
 
 namespace cwg.web.Controllers
 {
@@ -33,40 +32,36 @@ namespace cwg.web.Controllers
             new Random((int)DateTime.Now.Ticks).NextBytes(bytes);
         }
         
-        private async Task<FileReport> getAVListAsync(byte[] fileBytes, string fileName)
+        [Route("vtinfo/{fileName}")]
+        public async Task<PartialViewResult> VirusTotalInformation(string fileName)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(_settingsFile.VTKey))
-                {
-                    return null;
-                }
-
-                var virusTotal = new VirusTotal(_settingsFile.VTKey)
-                {
-                    UseTLS = true
-                };
-
-                var scanFileResult = await virusTotal.ScanFileAsync(fileBytes, fileName);
-
-                var result = await virusTotal.GetFileReportAsync(scanFileResult.ScanId);
-
-                while (result.ResponseCode != FileReportResponseCode.Present)
-                {
-                    System.Threading.Thread.Sleep(2000);
-
-                    result = await virusTotal.GetFileReportAsync(scanFileResult.ScanId);
-                }
-
-                return result.Scans == null ? null : result;
-            }
-            catch (Exception)
+            if (string.IsNullOrEmpty(_settingsFile.VTKey))
             {
                 return null;
             }
+
+            var virusTotal = new VirusTotal(_settingsFile.VTKey)
+            {
+                UseTLS = true
+            };
+
+            var fileBytes = System.IO.File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, fileName));
+
+            var scanFileResult = await virusTotal.ScanFileAsync(fileBytes, fileName);
+
+            var result = await virusTotal.GetFileReportAsync(scanFileResult.ScanId);
+
+            while (result.ResponseCode != FileReportResponseCode.Present)
+            {
+                System.Threading.Thread.Sleep(10000);
+
+                result = await virusTotal.GetFileReportAsync(scanFileResult.ScanId);
+            }
+
+            return PartialView(result);
         }
 
-        public async Task<IActionResult> Generate()
+        public IActionResult Generate()
         {
             var originalBytes = System.IO.File.ReadAllBytes("sourcePE");
 
@@ -91,7 +86,7 @@ namespace cwg.web.Controllers
             return View("Generation", new GenerationResponseModel
             {
                 FileName = $"{sha1Sum}.exe",
-                FileReportResult = await getAVListAsync(originalBytes, $"{sha1Sum}.exe")
+                SHA1 = sha1Sum
             });
         }
     }
