@@ -1,4 +1,6 @@
-﻿using cwg.web.Common;
+﻿using System.IO;
+
+using cwg.web.Common;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +15,7 @@ namespace cwg.web
         public Startup(IConfiguration configuration)
         {
             var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             Configuration = builder.Build();
