@@ -2,6 +2,5 @@
 {
     public class Settings
     {
-        public string VTKey { get; set; }
     }
 }   
