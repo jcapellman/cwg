@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 namespace cwg.web.Generators
 {
@@ -11,6 +12,14 @@ namespace cwg.web.Generators
         protected static void FillArray(byte[] bytes)
         {
             new Random((int)DateTime.Now.Ticks).NextBytes(bytes);
+        }
+
+        protected string ComputeSha1(byte[] bytes)
+        {
+            using (var shaManager = new SHA1Managed())
+            {
+                return BitConverter.ToString(shaManager.ComputeHash(bytes)).Replace("-", "");
+            }
         }
     }
 }

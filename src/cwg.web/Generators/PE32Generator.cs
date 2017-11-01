@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Security.Cryptography;
 
 namespace cwg.web.Generators
 {
@@ -19,13 +18,8 @@ namespace cwg.web.Generators
                 originalBytes[originalBytes.Length - 1 - y] = newBytes[y];
             }
 
-            string sha1Sum;
-
-            using (var shaManager = new SHA1Managed())
-            {
-                sha1Sum = BitConverter.ToString(shaManager.ComputeHash(originalBytes)).Replace("-", "");
-            }
-
+            var sha1Sum = ComputeSha1(originalBytes);
+            
             System.IO.File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.exe"), originalBytes);
 
             return (sha1Sum, $"{sha1Sum}.exe");
