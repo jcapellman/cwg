@@ -5,7 +5,7 @@ namespace cwg.web.Generators
 {
     public class PE32Generator : BaseGenerator
     {
-        public override (string sha1, string fileName) Generate()
+        protected override (string sha1, string fileName) Generate()
         {
             var originalBytes = System.IO.File.ReadAllBytes("sourcePE");
 

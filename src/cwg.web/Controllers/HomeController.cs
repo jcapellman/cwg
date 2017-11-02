@@ -18,9 +18,11 @@ namespace cwg.web.Controllers
 
         public IActionResult Index() => View();
         
-        public IActionResult Generate()
+        [HttpGet]
+        [HttpPost]
+        public IActionResult Generate(int numberToGenerate)
         {
-            var (sha1, fileName) = new PE32Generator().Generate();
+            var (sha1, fileName) = new PE32Generator().GenerateFiles(numberToGenerate);
 
             return View("Generation", new GenerationResponseModel
             {
