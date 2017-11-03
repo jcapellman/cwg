@@ -5,6 +5,12 @@
     <form asp-controller="Home" asp-action="Generate" method="post">    
         <input id="numberToGenerate" name="numberToGenerate" type="number" min="1" max="500" step="1" oninput="validity.valid||(value='');" placeholder="number to generate" class="form-control" value="1" style="max-width: 200px; text-align: center; margin: 0 auto" /><br />
     
+        <select id="fileType" name="fileType" class="form-control" style="max-width: 200px; margin: 0 auto; text-align: center">
+            <option>PE32</option>
+        </select>
+        
+        <br/>
+
         <button type="submit" class="btn-lg btn-primary">generate false positive</button>      
     </form>    
 </div>

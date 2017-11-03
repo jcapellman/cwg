@@ -20,14 +20,22 @@ namespace cwg.web.Controllers
         
         [HttpGet]
         [HttpPost]
-        public IActionResult Generate(int numberToGenerate)
+        public IActionResult Generate(int numberToGenerate, string fileType)
         {
-            var (sha1, fileName) = new PE32Generator().GenerateFiles(numberToGenerate);
+            var (sha1, fileName) = (string.Empty, string.Empty);
 
+            switch (fileType)
+            {
+                case "PE32":
+                    (sha1, fileName) = new PE32Generator().GenerateFiles(numberToGenerate);
+                    break;
+            }
+            
             return View("Generation", new GenerationResponseModel
             {
                 FileName = fileName,
-                SHA1 = sha1
+                SHA1 = sha1,
+                FileType = fileType
             });
         }
     }
