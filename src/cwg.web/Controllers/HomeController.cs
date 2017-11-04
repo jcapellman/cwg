@@ -1,4 +1,9 @@
-﻿using cwg.web.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
+using cwg.web.Common;
 using cwg.web.Generators;
 using cwg.web.Models;
 
@@ -16,20 +21,31 @@ namespace cwg.web.Controllers
             _settingsFile = settingsFile.Value;
         }
 
-        public IActionResult Index() => View();
-        
+        private static IEnumerable<BaseGenerator> GetGenerators()
+        {
+            var types = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(b => b.BaseType == typeof(BaseGenerator) && !b.IsAbstract).ToList();
+
+            return types.Select(a => (BaseGenerator) Activator.CreateInstance(a)).ToList();
+        }
+
+        public IActionResult Index() => View(GetGenerators().Select(a => a.GetName()).ToList());
+
+        private BaseGenerator getGenerator(string name) => GetGenerators().FirstOrDefault(a => a.GetName() == name);
+
         [HttpGet]
         [HttpPost]
         public IActionResult Generate(int numberToGenerate, string fileType)
         {
             var (sha1, fileName) = (string.Empty, string.Empty);
 
-            switch (fileType)
+            var generator = getGenerator(fileType);
+
+            if (generator == null)
             {
-                case "PE32":
-                    (sha1, fileName) = new PE32Generator().GenerateFiles(numberToGenerate);
-                    break;
+                throw new Exception($"{fileType} was not found");
             }
+
+            (sha1, fileName) = generator.GenerateFiles(numberToGenerate);
             
             return View("Generation", new GenerationResponseModel
             {

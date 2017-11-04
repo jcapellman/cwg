@@ -8,6 +8,8 @@ namespace cwg.web.Generators
 {
     public abstract class BaseGenerator
     {
+        public abstract string GetName();
+
         protected abstract (string sha1, string fileName) Generate();
 
         protected int getRandomInt(int min = 1, int max = 100) => new Random((int)DateTime.Now.Ticks).Next(min, max);

@@ -1,4 +1,6 @@
-﻿<div>
+﻿@model List<string>
+
+<div>
     <h3>Cleanware Generator</h3>
     <p>Generate a "unique" PE32 file for AV Testing below (Mach-O, ELF and PE32+ coming soon)</p>
     
@@ -6,7 +8,10 @@
         <input id="numberToGenerate" name="numberToGenerate" type="number" min="1" max="500" step="1" oninput="validity.valid||(value='');" placeholder="number to generate" class="form-control" value="1" style="max-width: 200px; text-align: center; margin: 0 auto" /><br />
     
         <select id="fileType" name="fileType" class="form-control" style="max-width: 200px; margin: 0 auto; text-align: center">
-            <option>PE32</option>
+            @foreach (var typeName in Model)
+            {
+                <option>@typeName</option>
+            }
         </select>
         
         <br/>
