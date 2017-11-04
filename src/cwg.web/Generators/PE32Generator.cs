@@ -9,7 +9,7 @@ namespace cwg.web.Generators
 
         protected override (string sha1, string fileName) Generate()
         {
-            var originalBytes = System.IO.File.ReadAllBytes("sourcePE");
+            var originalBytes = System.IO.File.ReadAllBytes("sourcePE.exe");
 
             var newBytes = new byte[getRandomInt()];
 
