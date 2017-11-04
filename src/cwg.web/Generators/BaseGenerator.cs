@@ -10,8 +10,8 @@ namespace cwg.web.Generators
     {
         public abstract string GetName();
 
-        protected abstract (string sha1, string fileName) Generate();
-
+        public abstract string GetSourceName();
+        
         protected int getRandomInt(int min = 1, int max = 100) => new Random((int)DateTime.Now.Ticks).Next(min, max);
 
         protected static void FillArray(byte[] bytes)
@@ -25,6 +25,26 @@ namespace cwg.web.Generators
             {
                 return BitConverter.ToString(shaManager.ComputeHash(bytes)).Replace("-", "");
             }
+        }
+
+        protected (string sha1, string fileName) Generate()
+        {
+            var originalBytes = System.IO.File.ReadAllBytes(GetSourceName());
+
+            var newBytes = new byte[getRandomInt()];
+
+            FillArray(newBytes);
+
+            for (var y = 0; y < newBytes.Length; y++)
+            {
+                originalBytes[originalBytes.Length - 1 - y] = newBytes[y];
+            }
+
+            var sha1Sum = ComputeSha1(originalBytes);
+
+            System.IO.File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.exe"), originalBytes);
+
+            return (sha1Sum, $"{sha1Sum}.exe");
         }
 
         public (string sha1, string fileName) GenerateFiles(int numberToGenerate)
