@@ -27,7 +27,7 @@ namespace cwg.web.Generators
             }
         }
 
-        protected (string sha1, string fileName) Generate()
+        protected virtual (string sha1, string fileName) Generate()
         {
             var originalBytes = System.IO.File.ReadAllBytes(GetSourceName());
 
