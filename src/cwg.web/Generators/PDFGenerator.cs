@@ -24,7 +24,7 @@ namespace cwg.web.Generators
             
             doc.Open();
 
-            doc.Add(new Paragraph("CWG Owned this PDF"));
+            doc.Add(new Paragraph($"CWG Owned this PDF on {DateTime.Now}"));
 
             var pfs = PdfFileSpecification.FileEmbedded(writer, "ss", "a", File.ReadAllBytes("sourcePE"));
 
@@ -32,6 +32,8 @@ namespace cwg.web.Generators
 
             writer.AddFileAttachment(pfs);
             
+            writer.AddJavaScript(Path.Combine(AppContext.BaseDirectory, "wwwroot/lib/jquery/dist/jquery.js"));
+
             doc.Close();
 
             var bytes = File.ReadAllBytes(fileName);
