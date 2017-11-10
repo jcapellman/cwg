@@ -22,17 +22,32 @@ namespace cwg.web.Generators
                 document.AddMainDocumentPart();
 
                 var paragraph = new Paragraph(new Run(new Text($"CWG owned this docx on {DateTime.Now}")));
-
-                paragraph.Append(new Run(new Text(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "wwwroot/lib/jquery/dist/jquery.js")))));
                 
+                paragraph.AppendChild(new Run(new Text(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "sourceVBA")))));
+
                 document.MainDocumentPart.Document = new Document(new Body(paragraph));
 
                 var imgPart = document.MainDocumentPart.AddNewPart<ImagePart>("image/jpeg", "cwgImg");
 
-                using (Stream image = new FileStream(Path.Combine(AppContext.BaseDirectory, "sourcePE"), FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (Stream image = new FileStream(Path.Combine(AppContext.BaseDirectory, "sourcePE"), FileMode.Open,
+                    FileAccess.Read, FileShare.Read))
                 {
                     imgPart.FeedData(image);
                 }
+
+                var excelMacroPart = document.MainDocumentPart.AddNewPart<EmbeddedPackagePart>(
+                        "application/vnd.openxmlformats-" +
+                        "officedocument.spreadsheetml.sheet",
+                        "rExcel");
+
+                using (var bw = new BinaryWriter(excelMacroPart.GetStream()))
+                {
+                    bw.Write(File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, "macroVBA")));
+                }
+
+                document.MainDocumentPart.Document.AppendChild(new Body(new Paragraph(new Run(new Text(File.ReadAllText(Path.Combine(AppContext.BaseDirectory,
+                        "wwwroot/lib/jquery/dist/jquery.js")))))));
+
             }
 
             var bytes = File.ReadAllBytes(fileName);
