@@ -1,0 +1,2 @@
+g++ main.cpp -Bstatic -lcurl -Bstatic -lm -Bstatic -lgtk+-2.0 -o sourceELF
+upx sourceELF
