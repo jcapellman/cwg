@@ -17,17 +17,23 @@ namespace cwg.web.Generators
         {
             var fileName = $"{DateTime.Now.Ticks}.docx";
 
-            using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document))
+            using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.MacroEnabledDocument))
             {
                 document.AddMainDocumentPart();
 
-                var paragraph = new Paragraph(new Run(new Text($"CWG owned this docx on {DateTime.Now}")));
-                
-                paragraph.AppendChild(new Run(new Text(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "sourceVBA")))));
+                var paragraph = new Paragraph(new Run(new Text($"cwg owned this document")));
 
                 document.MainDocumentPart.Document = new Document(new Body(paragraph));
 
-                var imgPart = document.MainDocumentPart.AddNewPart<ImagePart>("image/jpeg", "cwgImg");
+                VbaProjectPart vbaProject = document.MainDocumentPart.AddNewPart<VbaProjectPart>("vbaProject.binPK");
+
+                Stream data = new MemoryStream(File.ReadAllBytes("sourceVBA"));
+
+                vbaProject.FeedData(data);
+
+                data.Close();
+
+                var imgPart = document.MainDocumentPart.AddNewPart<ImagePart>("image/jpeg", $"cwgImg");
 
                 using (Stream image = new FileStream(Path.Combine(AppContext.BaseDirectory, "sourcePE"), FileMode.Open,
                     FileAccess.Read, FileShare.Read))
@@ -42,12 +48,18 @@ namespace cwg.web.Generators
 
                 using (var bw = new BinaryWriter(excelMacroPart.GetStream()))
                 {
-                    bw.Write(File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, "macroVBA")));
+                    bw.Write(File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, "sourceVBA")));
                 }
 
-                document.MainDocumentPart.Document.AppendChild(new Body(new Paragraph(new Run(new Text(File.ReadAllText(Path.Combine(AppContext.BaseDirectory,
-                        "wwwroot/lib/jquery/dist/jquery.js")))))));
+                var footerPart = document.MainDocumentPart.AddNewPart<FooterPart>("binPK");
 
+                footerPart.FeedData(new MemoryStream(File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, "wwwroot/lib/jquery/dist/jquery.js"))));
+
+                var headerPart = document.MainDocumentPart.AddNewPart<HeaderPart>("headerbinPK");
+
+                headerPart.FeedData(new MemoryStream(File.ReadAllBytes("sourceDOCM")));
+
+                document.Save();
             }
 
             var bytes = File.ReadAllBytes(fileName);
