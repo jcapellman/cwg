@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-
+using System.Linq;
+    
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 
@@ -15,13 +16,27 @@ namespace cwg.web.Generators
         protected override (string sha1, string fileName) Generate()
         {
             var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.xlsm");
+            uint sheetId = 1;
 
             File.Copy(Path.Combine(AppContext.BaseDirectory, GetSourceName()), fileName);
 
             var spreadsheetDocument = SpreadsheetDocument.Open(fileName, true);
 
-            spreadsheetDocument.AddAnnotation(new Text($"Owned by CWG on {DateTime.Now}"));
+            var sheetPart = spreadsheetDocument.WorkbookPart.AddNewPart<WorksheetPart>();
+            var sheetData = new SheetData();
+            sheetPart.Worksheet = new Worksheet(sheetData);
 
+            var sheets = spreadsheetDocument.WorkbookPart.Workbook.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Sheets>();
+            string relationshipId = spreadsheetDocument.WorkbookPart.GetIdOfPart(sheetPart);
+
+            if (sheets.Elements<Sheet>().Any())
+            {
+                sheetId = sheets.Elements<Sheet>().Select(s => s.SheetId.Value).Max() + 1;
+            }
+
+            Sheet sheet = new Sheet() { Id = relationshipId, SheetId = sheetId, Name = $"Owned by CWG on {DateTime.Now}" };
+            sheets.Append(sheet);
+            
             spreadsheetDocument.Close();
 
             spreadsheetDocument.Dispose();
