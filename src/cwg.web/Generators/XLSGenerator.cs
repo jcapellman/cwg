@@ -7,9 +7,11 @@ namespace cwg.web.Generators
 {
     public class XLSGenerator : BaseGenerator
     {
-        public override string GetName() => "XLS";
+        public override string Name => "XLS";
 
-        public override string GetSourceName() => string.Empty;
+        protected override string SourceName => string.Empty;
+
+        protected override string OutputExtension => "xls";
 
         protected override (string sha1, string fileName) Generate()
         {

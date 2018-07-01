@@ -6,16 +6,18 @@ namespace cwg.web.Generators
 {
     public class MACHOGenerator : BaseGenerator
     {
-        public override string GetName() => "Mach-o";
+        public override string Name => "Mach-o";
 
-        public override string GetSourceName() => "sourceMACHO";
+        protected override string SourceName => "sourceMACHO";
+
+        protected override string OutputExtension => ".macho";
 
         protected override (string sha1, string fileName) Generate()
         {
-            var originalBytes = File.ReadAllBytes(GetSourceName());
+            var originalBytes = File.ReadAllBytes(SourceName);
             var machioBytes = File.ReadAllBytes("sourceMACHIO");
 
-            var newBytes = new byte[getRandomInt()];
+            var newBytes = new byte[GetRandomInt()];
 
             FillArray(newBytes);
 
@@ -28,7 +30,7 @@ namespace cwg.web.Generators
 
             var sha1Sum = ComputeSha1(finalBytes);
 
-            System.IO.File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}"), finalBytes);
+            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}"), finalBytes);
 
             return (sha1Sum, $"{sha1Sum}");
         }

@@ -9,16 +9,16 @@ namespace cwg.web.Generators
 {
     public class XLSXGenerator : BaseGenerator
     {
-        public override string GetName() => "XLSM";
-
-        public override string GetSourceName() => "sourceXLSM";
+        public override string Name => "XLSM";
+        protected override string SourceName => "sourceXLSM";
+        protected override string OutputExtension => "xlsm";
 
         protected override (string sha1, string fileName) Generate()
         {
             var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.xlsm");
             uint sheetId = 1;
 
-            File.Copy(Path.Combine(AppContext.BaseDirectory, GetSourceName()), fileName);
+            File.Copy(Path.Combine(AppContext.BaseDirectory, SourceName), fileName);
 
             var spreadsheetDocument = SpreadsheetDocument.Open(fileName, true);
 

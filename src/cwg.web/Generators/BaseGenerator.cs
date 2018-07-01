@@ -14,9 +14,9 @@ namespace cwg.web.Generators
 
         protected abstract string OutputExtension { get; }    
 
-        private static int GetRandomInt(int min = 1, int max = 100) => new Random((int)DateTime.Now.Ticks).Next(min, max);
+        protected static int GetRandomInt(int min = 1, int max = 100) => new Random((int)DateTime.Now.Ticks).Next(min, max);
 
-        private static void FillArray(byte[] bytes) => new Random((int)DateTime.Now.Ticks).NextBytes(bytes);
+        protected static void FillArray(byte[] bytes) => new Random((int)DateTime.Now.Ticks).NextBytes(bytes);
 
         protected string ComputeSha1(byte[] bytes)
         {
