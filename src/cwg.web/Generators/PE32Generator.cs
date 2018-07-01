@@ -2,8 +2,10 @@
 {
     public class PE32Generator : BaseGenerator
     {
-        public override string GetName() => "PE32";
+        public override string Name => "PE32";
 
-        public override string GetSourceName() => "sourcePE.exe";
+        protected override string SourceName => "sourcePE.exe";
+
+        protected override string OutputExtension => "exe";
     }
 }

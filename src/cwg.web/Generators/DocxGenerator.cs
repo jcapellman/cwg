@@ -9,9 +9,11 @@ namespace cwg.web.Generators
 {
     public class DocxGenerator : BaseGenerator
     {
-        public override string GetName() => "DOCX";
+        public override string Name => "DOCX";
 
-        public override string GetSourceName() => string.Empty;
+        protected override string SourceName => string.Empty;
+
+        protected override string OutputExtension => "docx";
 
         protected override (string sha1, string fileName) Generate()
         {

@@ -2,8 +2,10 @@
 {
     public class ELFGenerator : BaseGenerator
     {
-        public override string GetName() => "ELF";
+        public override string Name => "ELF";
 
-        public override string GetSourceName() => "sourceELF";
+        protected override string SourceName => "sourceELF";
+
+        protected override string OutputExtension => "elf";
     }
 }

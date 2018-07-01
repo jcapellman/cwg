@@ -8,16 +8,15 @@ namespace cwg.web.Generators
 {
     public abstract class BaseGenerator
     {
-        public abstract string GetName();
+        public abstract string Name { get; }
 
-        public abstract string GetSourceName();
-        
-        protected int getRandomInt(int min = 1, int max = 100) => new Random((int)DateTime.Now.Ticks).Next(min, max);
+        protected abstract string SourceName { get; }
 
-        protected static void FillArray(byte[] bytes)
-        {
-            new Random((int)DateTime.Now.Ticks).NextBytes(bytes);
-        }
+        protected abstract string OutputExtension { get; }    
+
+        private static int GetRandomInt(int min = 1, int max = 100) => new Random((int)DateTime.Now.Ticks).Next(min, max);
+
+        private static void FillArray(byte[] bytes) => new Random((int)DateTime.Now.Ticks).NextBytes(bytes);
 
         protected string ComputeSha1(byte[] bytes)
         {
@@ -29,9 +28,9 @@ namespace cwg.web.Generators
 
         protected virtual (string sha1, string fileName) Generate()
         {
-            var originalBytes = System.IO.File.ReadAllBytes(GetSourceName());
+            var originalBytes = System.IO.File.ReadAllBytes(SourceName);
 
-            var newBytes = new byte[getRandomInt()];
+            var newBytes = new byte[GetRandomInt()];
 
             FillArray(newBytes);
 
@@ -42,7 +41,7 @@ namespace cwg.web.Generators
 
             var sha1Sum = ComputeSha1(originalBytes);
 
-            System.IO.File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.exe"), originalBytes);
+            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}"), originalBytes);
 
             return (sha1Sum, $"{sha1Sum}.exe");
         }

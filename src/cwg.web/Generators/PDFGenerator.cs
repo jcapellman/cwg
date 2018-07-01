@@ -8,9 +8,11 @@ namespace cwg.web.Generators
 {
     public class PDFGenerator : BaseGenerator
     {
-        public override string GetName() => "PDF";
+        public override string Name => "PDF";
 
-        public override string GetSourceName() => string.Empty;
+        protected override string SourceName => string.Empty;
+
+        protected override string OutputExtension => "pdf";
 
         protected override (string sha1, string fileName) Generate()
         {

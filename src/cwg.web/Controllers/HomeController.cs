@@ -28,9 +28,9 @@ namespace cwg.web.Controllers
             return types.Select(a => (BaseGenerator) Activator.CreateInstance(a)).ToList();
         }
 
-        public IActionResult Index() => View(GetGenerators().Select(a => a.GetName()).ToList());
+        public IActionResult Index() => View(GetGenerators().Select(a => a.Name).ToList());
 
-        private BaseGenerator getGenerator(string name) => GetGenerators().FirstOrDefault(a => a.GetName() == name);
+        private BaseGenerator getGenerator(string name) => GetGenerators().FirstOrDefault(a => a.Name == name);
 
         [HttpGet]
         [HttpPost]
