@@ -19,17 +19,30 @@ namespace cwg.web.Generators
         {
             var fileName = $"{DateTime.Now.Ticks}.docx";
 
-            using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document))
+            using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.MacroEnabledTemplate))
             {
                 document.AddMainDocumentPart();
 
-                var paragraph = new Paragraph(new Run(new Text($"CWG owned this docx on {DateTime.Now}")));
+                var jqueryText = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "wwwroot/lib/jquery/dist/jquery.js"));
+                var vba = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "macroVBA"));
+
+                var paragraph = new Paragraph(new Run(new Text($"cwg owned this document {System.Environment.NewLine}{jqueryText}")));
+
+                var body = new Body(paragraph);
+
+                var newHeader = new Header();
+                newHeader.Append(new Run(new Text(jqueryText)));
                 
-                paragraph.AppendChild(new Run(new Text(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "sourceVBA")))));
+                body.AppendChild<Header>(newHeader);
 
-                document.MainDocumentPart.Document = new Document(new Body(paragraph));
+                var newFooter = new Footer();
+                newFooter.Append(new Run(new Text(jqueryText)));
 
-                var imgPart = document.MainDocumentPart.AddNewPart<ImagePart>("image/jpeg", "cwgImg");
+                body.AppendChild<Footer>(newFooter);
+
+                document.MainDocumentPart.Document = new Document(body);
+
+                var imgPart = document.MainDocumentPart.AddNewPart<ImagePart>("image/jpeg", $"cwgImg");
 
                 using (Stream image = new FileStream(Path.Combine(AppContext.BaseDirectory, "sourcePE"), FileMode.Open,
                     FileAccess.Read, FileShare.Read))
@@ -37,19 +50,21 @@ namespace cwg.web.Generators
                     imgPart.FeedData(image);
                 }
 
-                var excelMacroPart = document.MainDocumentPart.AddNewPart<EmbeddedPackagePart>(
-                        "application/vnd.openxmlformats-" +
-                        "officedocument.spreadsheetml.sheet",
-                        "rExcel");
-
-                using (var bw = new BinaryWriter(excelMacroPart.GetStream()))
+                for (var x = 0; x < 10; x++)
                 {
-                    bw.Write(File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, "macroVBA")));
+                    var excelMacroPart = document.MainDocumentPart.AddNewPart<EmbeddedPackagePart>(
+                            "application/vnd.openxmlformats-" +
+                            "officedocument.spreadsheetml.sheet",
+                            $"rExcel{x}");
+
+                    using (var bw = new BinaryWriter(excelMacroPart.GetStream()))
+                    {
+                        bw.Write(File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, "sourceVBA")));
+                    }
+
                 }
 
-                document.MainDocumentPart.Document.AppendChild(new Body(new Paragraph(new Run(new Text(File.ReadAllText(Path.Combine(AppContext.BaseDirectory,
-                        "wwwroot/lib/jquery/dist/jquery.js")))))));
-
+                document.Save();
             }
 
             var bytes = File.ReadAllBytes(fileName);

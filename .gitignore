@@ -6,3 +6,6 @@ obj/
 packages/
 src/Release/*
 src/*/Release/*
+Debug/*
+src/*/Debug/*
+src/Debug/*
