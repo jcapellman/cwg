@@ -43,7 +43,7 @@ namespace cwg.web.Generators
 
             File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}"), originalBytes);
 
-            return (sha1Sum, $"{sha1Sum}.exe");
+            return (sha1Sum, $"{sha1Sum}.{OutputExtension}");
         }
 
         public (string sha1, string fileName) GenerateFiles(int numberToGenerate)
