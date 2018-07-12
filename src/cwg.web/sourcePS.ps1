@@ -23,8 +23,33 @@ foreach ($objItem in $colItems) {
 	[console]::WriteLine($objItem.IPAddress);	
 }
 
-$service = "[System.ServiceProcess.ServiceController]::GetServices()";
-	
+[console]::WriteLine("Parsing all of your Windows Services for some exp0it3...");
+
+[console]::WriteLine("While you wait, here's a tune...");
+
+[console]::beep(440,500) 
+[console]::beep(440,500) 
+[console]::beep(440,500) 
+[console]::beep(349,350) 
+[console]::beep(523,150) 
+[console]::beep(440,500) 
+[console]::beep(349,350) 
+[console]::beep(523,150) 
+[console]::beep(440,1000) 
+[console]::beep(659,500) 
+[console]::beep(659,500) 
+[console]::beep(659,500) 
+[console]::beep(698,350) 
+[console]::beep(523,150) 
+[console]::beep(415,500) 
+[console]::beep(349,350) 
+[console]::beep(523,150) 
+[console]::beep(440,1000)
+
+$countServices = (Get-Service  | Where Status -eq "Running").Length;
+
+[console]::WriteLine("$countServices exp0oitable servies found...");
+
 $path = "c:\temp";
 $source = "cwgpsdump";
 
@@ -69,7 +94,7 @@ For ($x = 0; $x -lt 25; $x++) {
 	$client.DownloadFile("http://cwg.io/", $downloadPath);	
 	Add-Content $downloadPath $encrypted;
 
-	[console]::WriteLine("And again and again $env:UserName to $downloadPath...");
+	[console]::WriteLine("0wning your $path folder again and again $env:UserName with bytes to $downloadPath...");
 
 	[System.IO.File]::Delete($downloadPath);	
 
