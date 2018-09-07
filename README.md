@@ -13,4 +13,3 @@ The idea behind this came up when testing whether or not an AV would alert on a 
 #### Future supported file types: ####
 * Android APK
 * doc/xls
-* Linux ELF files
