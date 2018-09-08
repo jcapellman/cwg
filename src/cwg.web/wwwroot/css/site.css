@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: #1e1e1e;
+    background-color: #0e0e0e;
 }
 
 .body-content {
@@ -28,4 +28,8 @@ footer {
 
 .vtinfovalue {
     float: left;
+}
+
+.form-generation {   
+    color: white;
 }
