@@ -9,7 +9,8 @@ The idea behind this came up when testing whether or not an AV would alert on a 
 * Docx
 * Mach-o
 * PDF
+* Linux ELF
+* XLS
 
 #### Future supported file types: ####
 * Android APK
-* doc/xls
