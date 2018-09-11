@@ -1,21 +1,27 @@
 ﻿@model List<string>
 
 <div>
-    <h3>Cleanware Generator</h3>
-    <p>Generate a "unique" file for AV Testing below</p>
+    <h2>"Cleanware" Sample Generator</h2>
+    <p>The idea behind this came up when testing whether or not an AV would alert on a file. Not wanting to use real malicious files on a bare metal machine, this was born. As time has gone on, I have added more and more file types to the list, while also updating the "squirelly-ness" of the files as AV's have gotten "smarter" about false positives.</p>
     
-    <form asp-controller="Home" asp-action="Generate" method="post">    
-        <input id="numberToGenerate" name="numberToGenerate" type="number" min="1" max="500" step="1" oninput="validity.valid||(value='');" placeholder="number to generate" class="form-control" value="1" style="max-width: 200px; text-align: center; margin: 0 auto" /><br />
-    
-        <select id="fileType" name="fileType" class="form-control" style="max-width: 200px; margin: 0 auto; text-align: center">
-            @foreach (var typeName in Model)
-            {
-                <option>@typeName</option>
-            }
-        </select>
-        
-        <br/>
+    <div class="form-generation">
+        <h3>Generate Samples</h3>
+        <form asp-controller="Home" asp-action="Generate" method="post">
+            <label for="numberToGenerate">number of samples to generate</label>
+            <input id="numberToGenerate" name="numberToGenerate" type="number" min="1" max="500" step="1" oninput="validity.valid||(value='');" placeholder="number to generate" class="form-control" value="1" style="max-width: 200px; text-align: center; margin: 0 auto" /><br />
 
-        <button type="submit" class="btn-lg btn-primary">generate false positive</button>      
-    </form>    
+            <label for="fileType">sample type</label>
+
+            <select id="fileType" name="fileType" class="form-control" style="max-width: 200px; margin: 0 auto; text-align: center">
+                @foreach (var typeName in Model)
+                {
+                    <option>@typeName</option>
+                }
+            </select>
+
+            <br />
+
+            <button type="submit" class="btn-lg btn-primary">generate sample(s)</button>
+        </form>    
+    </div>
 </div>
