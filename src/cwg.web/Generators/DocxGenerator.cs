@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
-
+using System.Linq;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using DW = DocumentFormat.OpenXml.Drawing.Wordprocessing;
+using A = DocumentFormat.OpenXml.Drawing;
+using PIC = DocumentFormat.OpenXml.Drawing.Pictures;
 
 namespace cwg.web.Generators
 {
@@ -15,56 +18,135 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => "docx";
 
+        private static void AddImageToBody(WordprocessingDocument wordDoc, string relationshipId)
+        {
+            // Define the reference of the image.
+            var element =
+                 new Drawing(
+                     new DW.Inline(
+                         new DW.Extent() { Cx = 990000L, Cy = 792000L },
+                         new DW.EffectExtent()
+                         {
+                             LeftEdge = 0L,
+                             TopEdge = 0L,
+                             RightEdge = 0L,
+                             BottomEdge = 0L
+                         },
+                         new DW.DocProperties()
+                         {
+                             Id = (UInt32Value)1U,
+                             Name = "Picture 1"
+                         },
+                         new DW.NonVisualGraphicFrameDrawingProperties(
+                             new A.GraphicFrameLocks() { NoChangeAspect = true }),
+                         new A.Graphic(
+                             new A.GraphicData(
+                                 new PIC.Picture(
+                                     new PIC.NonVisualPictureProperties(
+                                         new PIC.NonVisualDrawingProperties()
+                                         {
+                                             Id = (UInt32Value)0U,
+                                             Name = "New Bitmap Image.jpg"
+                                         },
+                                         new PIC.NonVisualPictureDrawingProperties()),
+                                     new PIC.BlipFill(
+                                         new A.Blip(
+                                             new A.BlipExtensionList(
+                                                 new A.BlipExtension()
+                                                 {
+                                                     Uri =
+                                                        "{28A0092B-C50C-407E-A947-70E740481C1C}"
+                                                 })
+                                         )
+                                         {
+                                             Embed = relationshipId,
+                                             CompressionState =
+                                             A.BlipCompressionValues.Print
+                                         },
+                                         new A.Stretch(
+                                             new A.FillRectangle())),
+                                     new PIC.ShapeProperties(
+                                         new A.Transform2D(
+                                             new A.Offset() { X = 0L, Y = 0L },
+                                             new A.Extents() { Cx = 990000L, Cy = 792000L }),
+                                         new A.PresetGeometry(
+                                             new A.AdjustValueList()
+                                         )
+                                         { Preset = A.ShapeTypeValues.Rectangle }))
+                             )
+                             { Uri = "http://schemas.openxmlformats.org/drawingml/2006/picture" })
+                     )
+                     {
+                         DistanceFromTop = (UInt32Value)0U,
+                         DistanceFromBottom = (UInt32Value)0U,
+                         DistanceFromLeft = (UInt32Value)0U,
+                         DistanceFromRight = (UInt32Value)0U,
+                         EditId = "50D07946"
+                     });
+
+            // Append the reference to body, the element should be in a Run.
+            wordDoc.MainDocumentPart.Document.Body.AppendChild(new Paragraph(new Run(element)));
+        }
+
         protected override (string sha1, string fileName) Generate()
         {
             var fileName = $"{DateTime.Now.Ticks}.docx";
 
-            using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.MacroEnabledTemplate))
+            using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document, true))
             {
-                document.AddMainDocumentPart();
-
                 var jqueryText = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "wwwroot/lib/jquery/dist/jquery.js"));
-                var vba = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "macroVBA"));
 
-                var paragraph = new Paragraph(new Run(new Text($"cwg owned this document {System.Environment.NewLine}{jqueryText}")));
 
-                var body = new Body(paragraph);
+                var mainPart = document.AddMainDocumentPart();
 
-                var newHeader = new Header();
-                newHeader.Append(new Run(new Text(jqueryText)));
-                
-                body.AppendChild<Header>(newHeader);
+                new Document(new Body()).Save(mainPart);
 
-                var newFooter = new Footer();
-                newFooter.Append(new Run(new Text(jqueryText)));
+                Body body = mainPart.Document.Body;
+                body.Append(new Paragraph(
+                    new Run(
+                        new Text($"cwg owned this document on {DateTime.Now} {System.Environment.NewLine}\r\n{jqueryText}"))));
 
-                body.AppendChild<Footer>(newFooter);
-
-                document.MainDocumentPart.Document = new Document(body);
-
-                var imgPart = document.MainDocumentPart.AddNewPart<ImagePart>("image/jpeg", $"cwgImg");
-
-                using (Stream image = new FileStream(Path.Combine(AppContext.BaseDirectory, "sourcePE"), FileMode.Open,
-                    FileAccess.Read, FileShare.Read))
+                for (var x = 0; x < 10; x++)
                 {
-                    imgPart.FeedData(image);
+                    body.Append(new Paragraph(new Run(new Text("https://wwww.jarredcapellman.com/"))));
+
+                    body.Append(new Paragraph(new Run(new Text($"http://btyl.io/{x}/"))));
                 }
 
                 for (var x = 0; x < 10; x++)
                 {
-                    var excelMacroPart = document.MainDocumentPart.AddNewPart<EmbeddedPackagePart>(
-                            "application/vnd.openxmlformats-" +
-                            "officedocument.spreadsheetml.sheet",
-                            $"rExcel{x}");
+                    ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
 
-                    using (var bw = new BinaryWriter(excelMacroPart.GetStream()))
+                    using (FileStream stream = new FileStream(Path.Combine(AppContext.BaseDirectory, "embed.jpg"),
+                        FileMode.Open))
                     {
-                        bw.Write(File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, "sourceVBA")));
-                    }
+                        imagePart.FeedData(stream);
 
+                        AddImageToBody(document, mainPart.GetIdOfPart(imagePart));
+                    }
                 }
 
-                document.Save();
+                mainPart.Document.Save();
+                /*
+                
+                var p = new Paragraph();
+                var r = new Run();
+                var t = new Text($"cwg owned this document on {DateTime.Now} {System.Environment.NewLine}{jqueryText}");
+                r.Append(t);
+                p.Append(r);
+
+                docBody.Append(p);
+
+                
+                for (var x = 0; x < 1000; x++)
+                {
+                    body.AppendChild(new Paragraph(new Run(new Text("https://wwww.jarredcapellman.com/"))));
+
+                    body.AppendChild(new Paragraph(new Run(new Text($"http://btyl.io/{x}/"))));
+                }
+                
+                
+                document.Save();*/
             }
 
             var bytes = File.ReadAllBytes(fileName);
