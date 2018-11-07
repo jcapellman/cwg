@@ -30,7 +30,11 @@ namespace cwg.web.Generators
 
             var sha1Sum = ComputeSha1(finalBytes);
 
-            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}"), finalBytes);
+            var filePath = Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}");
+
+            File.WriteAllBytes(filePath, finalBytes);
+
+            Exec($"chmod 777 {filePath}");
 
             return (sha1Sum, $"{sha1Sum}");
         }
