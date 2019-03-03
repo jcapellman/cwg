@@ -49,7 +49,7 @@ GEM
     mini_portile2 (2.3.0)
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
-    nokogiri (1.8.4-x64-mingw32)
+    nokogiri (1.8.5-x64-mingw32)
       mini_portile2 (~> 2.3.0)
     pathutil (0.16.1)
       forwardable-extended (~> 2.6)
