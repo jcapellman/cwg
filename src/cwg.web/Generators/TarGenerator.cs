@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 using SharpCompress.Common;
+using SharpCompress.Writers;
 using SharpCompress.Writers.Tar;
 
 namespace cwg.web.Generators
@@ -35,22 +36,19 @@ namespace cwg.web.Generators
 
             File.WriteAllBytes(sourcePEPath, originalBytes);
 
-            var zipArchiveFileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.tar");
+            var tarArchiveFileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.tar");
 
-            using (var stream = new MemoryStream())
+            using (var zip = File.OpenWrite(tarArchiveFileName))
             {
-                using (Stream content = File.OpenRead(sourcePEPath))
+                using (var zipWriter = WriterFactory.Open(zip, ArchiveType.Tar, CompressionType.GZip))
                 {
-                    using (var writer = new TarWriter(stream, new TarWriterOptions(CompressionType.BZip2, true)))
-                    {
-                        writer.Write(zipArchiveFileName, content, null);
-                    }
+                    zipWriter.Write(sha1Sum, sourcePEPath);
                 }
             }
 
-            var sha1 = ComputeSha1(File.ReadAllBytes(zipArchiveFileName));
+            var sha1 = ComputeSha1(File.ReadAllBytes(tarArchiveFileName));
 
-            File.Move(zipArchiveFileName, Path.Combine(AppContext.BaseDirectory, $"{sha1}.tar"));
+            File.Move(tarArchiveFileName, Path.Combine(AppContext.BaseDirectory, $"{sha1}.tar"));
 
             return (sha1, $"{sha1}.tar");
         }
