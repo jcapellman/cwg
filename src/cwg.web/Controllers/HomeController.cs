@@ -34,7 +34,7 @@ namespace cwg.web.Controllers
 
             baseGenerators.AddRange(GetObjects<BaseArchiveGenerator>());
 
-            return baseGenerators;
+            return baseGenerators.OrderBy(a => a.Name);
         }
 
         public IActionResult Index() => View(GetGenerators().Select(a => a.Name).ToList());
