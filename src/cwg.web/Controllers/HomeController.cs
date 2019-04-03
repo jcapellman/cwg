@@ -21,11 +21,20 @@ namespace cwg.web.Controllers
             _settingsFile = settingsFile.Value;
         }
 
+        private static List<T> GetObjects<T>()
+        {
+            var types = Assembly.GetExecutingAssembly().GetTypes().Where(a => a.BaseType == typeof(T) && !a.IsAbstract);
+
+            return types.Select(b => (T) Activator.CreateInstance(b)).ToList();
+        }
+
         private static IEnumerable<BaseGenerator> GetGenerators()
         {
-            var types = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(b => b.BaseType == typeof(BaseGenerator) && !b.IsAbstract).ToList();
+            var baseGenerators = GetObjects<BaseGenerator>();
 
-            return types.Select(a => (BaseGenerator) Activator.CreateInstance(a)).ToList();
+            baseGenerators.AddRange(GetObjects<BaseArchiveGenerator>());
+
+            return baseGenerators;
         }
 
         public IActionResult Index() => View(GetGenerators().Select(a => a.Name).ToList());
