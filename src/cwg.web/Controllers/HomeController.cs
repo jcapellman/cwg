@@ -3,24 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-using cwg.web.Common;
 using cwg.web.Generators;
 using cwg.web.Models;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace cwg.web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Settings _settingsFile;
-
-        public HomeController(IOptions<Settings> settingsFile)
-        {
-            _settingsFile = settingsFile.Value;
-        }
-
         private static List<T> GetObjects<T>()
         {
             var types = Assembly.GetExecutingAssembly().GetTypes().Where(a => a.BaseType == typeof(T) && !a.IsAbstract);
@@ -45,8 +36,6 @@ namespace cwg.web.Controllers
         [HttpPost]
         public IActionResult Generate(int numberToGenerate, string fileType)
         {
-            var (sha1, fileName) = (string.Empty, string.Empty);
-
             var generator = getGenerator(fileType);
 
             if (generator == null)
@@ -54,7 +43,7 @@ namespace cwg.web.Controllers
                 throw new Exception($"{fileType} was not found");
             }
 
-            (sha1, fileName) = generator.GenerateFiles(numberToGenerate);
+            var (sha1, fileName) = generator.GenerateFiles(numberToGenerate);
             
             return View("Generation", new GenerationResponseModel
             {
