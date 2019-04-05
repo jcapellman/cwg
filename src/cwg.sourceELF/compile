@@ -1,2 +1,2 @@
-g++ main.cpp -Bstatic -lcurl -Bstatic -W -lm -Bstatic -o sourceELF
+g++ main.cpp -Bstatic -lcurl -lmpx -ltsan -lgcov -lm -lquadmath -o sourceELF
 upx sourceELF
