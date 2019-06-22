@@ -54,7 +54,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>4E74197D31EBC24B92C873B72ACF25A3BA1D07D1</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>48CA807F55713C81595D639020523A0C6E593E50</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>cwg.sourceWPFSIGNED_TemporaryKey.pfx</ManifestKeyFile>
@@ -63,7 +63,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>cwg.sourceWPFSIGNED_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
