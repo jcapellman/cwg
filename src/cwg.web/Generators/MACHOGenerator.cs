@@ -15,10 +15,10 @@ namespace cwg.web.Generators
         protected override (string sha1, string fileName) Generate()
         {
             var originalBytes = File.ReadAllBytes(SourceName);
-            var machioBytes = File.ReadAllBytes("sourceMACHIO");
+            var machioBytes = File.ReadAllBytes("sourceMACHO");
 
             var newBytes = new byte[GetRandomInt()];
-
+            
             FillArray(newBytes);
 
             for (var y = 0; y < newBytes.Length; y++)

@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-using cwg.web.Common;
 using cwg.web.Generators;
 using cwg.web.Models;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace cwg.web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Settings _settingsFile;
-
-        public HomeController(IOptions<Settings> settingsFile)
+        private static List<T> GetObjects<T>()
         {
-            _settingsFile = settingsFile.Value;
+            var types = Assembly.GetExecutingAssembly().GetTypes().Where(a => a.BaseType == typeof(T) && !a.IsAbstract);
+
+            return types.Select(b => (T) Activator.CreateInstance(b)).ToList();
         }
 
         private static IEnumerable<BaseGenerator> GetGenerators()
         {
-            var types = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(b => b.BaseType == typeof(BaseGenerator) && !b.IsAbstract).ToList();
+            var baseGenerators = GetObjects<BaseGenerator>();
 
-            return types.Select(a => (BaseGenerator) Activator.CreateInstance(a)).ToList();
+            baseGenerators.AddRange(GetObjects<BaseArchiveGenerator>());
+
+            return baseGenerators.OrderBy(a => a.Name);
         }
 
         public IActionResult Index() => View(GetGenerators().Select(a => a.Name).ToList());
@@ -36,8 +36,6 @@ namespace cwg.web.Controllers
         [HttpPost]
         public IActionResult Generate(int numberToGenerate, string fileType)
         {
-            var (sha1, fileName) = (string.Empty, string.Empty);
-
             var generator = getGenerator(fileType);
 
             if (generator == null)
@@ -45,7 +43,7 @@ namespace cwg.web.Controllers
                 throw new Exception($"{fileType} was not found");
             }
 
-            (sha1, fileName) = generator.GenerateFiles(numberToGenerate);
+            var (sha1, fileName) = generator.GenerateFiles(numberToGenerate);
             
             return View("Generation", new GenerationResponseModel
             {

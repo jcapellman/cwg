@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 
-#pragma comment(lib, "libcurl.lib")
-
 using namespace std;
 
 int main()
