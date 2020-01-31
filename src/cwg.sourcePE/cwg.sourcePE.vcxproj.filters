@@ -19,4 +19,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <_EmbedManagedResourceFile Include="..\cwg.sourceIL\cwg.sourcePE.exe" />
+    <_EmbedManagedResourceFile Include="..\cwg.sourceIL\macho" />
+    <_EmbedManagedResourceFile Include="sourcePE+.exe" />
+    <_EmbedManagedResourceFile Include="92898E9F2DE57CDD726CDBA20E216DA08575AEF5" />
+    <_EmbedManagedResourceFile Include="C:\Users\jcape\Downloads\DAB4C66E753F2CC7B1EEB4FA9A7D7ADCB48D05B8.exe">
+      <Filter>Resource Files</Filter>
+    </_EmbedManagedResourceFile>
+  </ItemGroup>
 </Project>

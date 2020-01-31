@@ -16,7 +16,7 @@ namespace cwg.web.Generators
         {
             var fileName = $"{DateTime.Now.Ticks}.{OutputExtension}";
 
-            var originalBytes = File.ReadAllBytes("sourcePE");
+            var originalBytes = File.ReadAllBytes(SourceName);
 
             var newBytes = new byte[GetRandomInt()];
 

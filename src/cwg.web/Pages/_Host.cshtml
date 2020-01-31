@@ -1,0 +1,32 @@
+﻿@page "/"
+@namespace cwg.web.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cleanware Generator</title>
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+          asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+          asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    
+    <base href="~/" />
+</head>
+<body>
+    <app>
+        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
+    </app>
+
+    <footer>
+        <p>
+            Created by <a href="http://www.jarredcapellman.com" target="_blank">Jarred Capellman</a><br />
+            source code is on <a href="https://github.com/jcapellman/cwg" target="_blank">github</a>
+        </p>
+    </footer>
+
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>
