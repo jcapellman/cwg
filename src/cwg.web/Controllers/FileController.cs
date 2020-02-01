@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace cwg.web.Controllers
 {
-    public class FileController : Controller
+    public class FileController : ControllerBase
     {
         [Route("file/{filename}")]
         public IActionResult Index(string filename) => 
