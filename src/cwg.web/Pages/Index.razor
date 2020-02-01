@@ -1,40 +1,74 @@
 ﻿@page "/"
 
+@using System;
 @using cwg.web.Data;
 @using cwg.web.Generators
 
 @inject GeneratorsService GeneratorService
 
-@if (_generators != null)
-{
-    <section class="h-100">
-        <header class="container h-100">
-            <div class="d-flex align-items-center justify-content-center h-100">
-                <div class="d-flex flex-column">
-                    <form asp-controller="Home" asp-action="Generate" method="post">
+<section class="h-100">
+    <header class="container h-100">
+        <div class="d-flex align-items-center justify-content-center h-100">
+            <div class="d-flex flex-column">
+                @if (_generators != null && _responseModel == null && _requestModel != null)
+                {
+                    <EditForm Model="@_requestModel" OnValidSubmit="HandleValidSubmit">
                         <h2>cwg</h2>
                         <div class="form-group">
                             <label for="fileType">sample type</label>
 
-                            <select id="fileType" name="fileType" class="form-control" style="max-width: 200px; margin: 0 auto; text-align: center">
+                            <InputSelect id="fileType" name="fileType" class="form-control" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-Value="_requestModel.FileType">
                                 @foreach (var generator in _generators)
-                                {
+                                    {
                                     <option>@generator.Name</option>
-                                }
-                            </select>
+                                    }
+                            </InputSelect>
+
+                            <InputNumber @bind-Value="_requestModel.NumberToGenerate" id="numberToGenerate" name="numberToGenerate" type="number" min="1" max="500" step="1" placeholder="number to generate" class="form-control" style="max-width: 200px; text-align: center; margin: 0 auto" />
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn-lg btn-primary">generate sample(s)</button>
                         </div>
-                    </form>
-                    </div>
-            
+                    </EditForm>
+                }
+                else if (_responseModel != null)
+                {
+                    <h4>Generated @_responseModel.FileType file (@_responseModel.SHA1)</h4>
+
+                    <a href="/file/@_responseModel.FileName" role="button" class="btn btn-info btn-lg">Download File</a><br /><br />
+
+                    <a href="/Home/Generate?numberToGenerate=1&fileType=@Uri.EscapeDataString(_responseModel.FileType)" role="button" class="btn btn-success">generate one more</a>
+
+                    <button onclick="ClearForm()" class="btn btn-warning">home</button>
+                }
+
+                <p>
+                    Created by <a href="http://www.jarredcapellman.com" target="_blank">Jarred Capellman</a><br />
+                    source code is on <a href="https://github.com/jcapellman/cwg" target="_blank">github</a>
+                </p>
+            </div>
         </div>
-        </header>
-    </section>
+    </header>
+</section>
+
+@functions
+{
+    void ClearForm()
+    {
+        _responseModel = null;
+    }
 }
 
 @code {
+    private GenerationResponseModel _responseModel = null;
+
+    private GenerationRequestModel _requestModel = new GenerationRequestModel();
+
+    private void HandleValidSubmit()
+    {
+        _responseModel = GeneratorService.GenerateFile(_requestModel);
+    }
+
     private IEnumerable<BaseGenerator> _generators;
 
     protected override void OnInitialized()
