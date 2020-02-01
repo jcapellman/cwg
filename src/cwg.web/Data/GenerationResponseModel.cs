@@ -1,5 +1,3 @@
-using System;
-
 namespace cwg.web.Data
 {
     public class GenerationResponseModel
