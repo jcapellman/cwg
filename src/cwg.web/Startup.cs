@@ -23,7 +23,7 @@ namespace cwg.web
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddSingleton(new GeneratoreRepository());
+            services.AddSingleton(new GeneratorRepository());
             services.AddSingleton<GeneratorsService>();
         }
 
