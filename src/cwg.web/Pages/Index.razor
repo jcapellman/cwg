@@ -5,8 +5,9 @@
 @using cwg.web.Generators
 @using cwg.web.Repositories
 
+@inject NavigationManager NavigationManager
 @inject GeneratorsService GeneratorService
-@inject GeneratoreRepository Repository
+@inject GeneratorRepository Repository
 
 <section class="h-100">
     <header class="container h-100">
@@ -19,7 +20,7 @@
                         <div class="form-group">
                             <label for="fileType">sample type</label>
 
-                            <InputSelect id="fileType" name="fileType" class="form-control" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-Value="_requestModel.FileType">
+                            <InputSelect id="fileType" name="fileType" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-Value="_requestModel.FileType">
                                 @foreach (var generator in _generators)
                                     {
                                     <option>@generator.Name</option>
@@ -39,9 +40,9 @@
 
                     <a href="/file/@_responseModel.FileName" role="button" class="btn btn-info btn-lg">Download File</a><br /><br />
 
-                    <a href="/Home/Generate?numberToGenerate=1&fileType=@Uri.EscapeDataString(_responseModel.FileType)" role="button" class="btn btn-success">generate one more</a>
+                    <button @onclick="GenerateOneMore" class="btn btn-success">generate one more</button>
 
-                    <a href="/" onclick="ClearForm()" class="btn btn-warning">home</a>
+                    <button @onclick="GoHome" class="btn btn-warning">reset</button>
                 }
 
                 <p>
@@ -55,9 +56,16 @@
 
 @functions
 {
-    void ClearForm()
+    protected void GoHome()
     {
-        _responseModel = null; ;
+        _responseModel = null;
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void GenerateOneMore()
+    {
+        HandleValidSubmit();
     }
 }
 
@@ -75,6 +83,6 @@
 
     protected override void OnInitialized()
     {
-        _generators = Repository.GetGenerators();
+        _generators = GeneratorRepository.GetGenerators();
     }
 }
