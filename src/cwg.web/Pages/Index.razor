@@ -3,8 +3,10 @@
 @using System;
 @using cwg.web.Data;
 @using cwg.web.Generators
+@using cwg.web.Repositories
 
 @inject GeneratorsService GeneratorService
+@inject GeneratoreRepository Repository
 
 <section class="h-100">
     <header class="container h-100">
@@ -39,7 +41,7 @@
 
                     <a href="/Home/Generate?numberToGenerate=1&fileType=@Uri.EscapeDataString(_responseModel.FileType)" role="button" class="btn btn-success">generate one more</a>
 
-                    <button onclick="ClearForm()" class="btn btn-warning">home</button>
+                    <a href="/" onclick="ClearForm()" class="btn btn-warning">home</a>
                 }
 
                 <p>
@@ -55,7 +57,7 @@
 {
     void ClearForm()
     {
-        _responseModel = null;
+        _responseModel = null; ;
     }
 }
 
@@ -73,6 +75,6 @@
 
     protected override void OnInitialized()
     {
-        _generators = GeneratorService.GetGenerators();
+        _generators = Repository.GetGenerators();
     }
 }
