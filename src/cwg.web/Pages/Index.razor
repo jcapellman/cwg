@@ -22,11 +22,12 @@
 
                             <InputSelect id="fileType" name="fileType" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-Value="_requestModel.FileType">
                                 @foreach (var generator in _generators)
-                                    {
+                                {
                                     <option>@generator.Name</option>
-                                    }
+                                }
                             </InputSelect>
 
+                            <label for="numberToGenerate">quantity to generate</label>
                             <InputNumber @bind-Value="_requestModel.NumberToGenerate" id="numberToGenerate" name="numberToGenerate" type="number" min="1" max="500" step="1" placeholder="number to generate" class="form-control" style="max-width: 200px; text-align: center; margin: 0 auto" />
                         </div>
                         <div class="form-group">
