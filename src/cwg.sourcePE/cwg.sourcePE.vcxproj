@@ -39,6 +39,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <SpectreMitigation>false</SpectreMitigation>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -178,6 +179,21 @@
     <_EmbedManagedResourceFile Include="92898E9F2DE57CDD726CDBA20E216DA08575AEF5">
       <FileType>Document</FileType>
     </_EmbedManagedResourceFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\cwg.sourceil\poison.exe">
+      <FileType>Document</FileType>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cwg.sourcePE.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\cwg.sourceNF\poison.exe" />
+    <None Include="exe1.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
