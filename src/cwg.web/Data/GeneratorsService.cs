@@ -1,15 +1,14 @@
-using cwg.web.Generators;
-
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+
+using cwg.web.Generators;
+using cwg.web.Repositories;
 
 namespace cwg.web.Data
 {
     public class GeneratorsService
     {
-        private BaseGenerator GetGenerator(string name) => GetGenerators().FirstOrDefault(a => a.Name == name);
+        private BaseGenerator GetGenerator(string name) => GeneratorRepository.GetGenerators().FirstOrDefault(a => a.Name == name);
 
         public GenerationResponseModel GenerateFile(GenerationRequestModel model)
         {

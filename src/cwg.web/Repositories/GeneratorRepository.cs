@@ -7,7 +7,7 @@ using cwg.web.Generators;
 
 namespace cwg.web.Repositories
 {
-    public class GeneratoreRepository
+    public class GeneratorRepository
     {
         private static List<T> GetObjects<T>()
         {
@@ -16,7 +16,7 @@ namespace cwg.web.Repositories
             return types.Select(b => (T)Activator.CreateInstance(b)).ToList();
         }
 
-        public IEnumerable<BaseGenerator> GetGenerators()
+        public static IEnumerable<BaseGenerator> GetGenerators()
         {
             var baseGenerators = GetObjects<BaseGenerator>();
 

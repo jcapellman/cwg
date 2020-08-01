@@ -10,13 +10,13 @@
 
   <ItemGroup>
     <PackageReference Include="DocumentFormat.OpenXml">
-      <Version>2.10.0</Version>
+      <Version>2.10.1</Version>
     </PackageReference>
     <PackageReference Include="DotNetCore.NPOI" Version="1.2.2" />
     <PackageReference Include="iTextSharp">
       <Version>5.5.13.1</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="SharpCompress" Version="0.24.0" />
     <PackageReference Include="System.IO.Compression.ZipFile">
