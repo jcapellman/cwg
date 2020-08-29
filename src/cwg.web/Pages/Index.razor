@@ -16,7 +16,7 @@
                 @if (_generators != null && _requestModel != null)
                 {
                 <EditForm Model="_requestModel" OnValidSubmit="HandleValidSubmit">
-                    <h2><a href="https://cwg.io/">cwg</a></h2>
+                    <h2><a @onclick="Refresh">cwg</a></h2>
 
                     @if (_responseModel == null)
                     {
@@ -44,7 +44,9 @@
 
                         <a href="/file/@_responseModel.FileName" role="button" class="btn btn-info btn-lg">Download File</a><br /><br />
 
-                        <button @onclick="GenerateOneMore" class="btn btn-success">generate one more</button>
+                        <button @onclick="GenerateOneMore" class="btn btn-success">generate one more</button><br /><br/>
+
+                        <button @onclick="Refresh" class="btn btn-warning">go home | reset generator</button>
                     }
                 </EditForm>
                 }
@@ -52,7 +54,7 @@
                 <p>
                     Created by <a href="http://www.jarredcapellman.com" target="_blank">Jarred Capellman</a><br />
                     source code is on <a href="https://github.com/jcapellman/cwg" target="_blank">github</a><br/>
-                    Version 2020.8.0
+                    Version 2020.8.1
                 </p>
             </div>
         </div>
@@ -64,6 +66,11 @@
     protected void GenerateOneMore()
     {
         HandleValidSubmit();
+    }
+
+    protected void Refresh()
+    {
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
     }
 }
 
