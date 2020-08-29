@@ -13,18 +13,21 @@
     <header class="container h-100">
         <div class="d-flex align-items-center justify-content-center h-100">
             <div class="d-flex flex-column">
-                @if (_generators != null && _responseModel == null && _requestModel != null)
+                @if (_generators != null && _requestModel != null)
                 {
-                    <EditForm Model="_requestModel" OnValidSubmit="HandleValidSubmit">
-                        <h2>cwg</h2>
+                <EditForm Model="_requestModel" OnValidSubmit="HandleValidSubmit">
+                    <h2>cwg</h2>
+
+                    @if (_responseModel == null)
+                    {
                         <div class="form-group">
                             <label for="fileType">sample type</label>
 
                             <InputSelect id="fileType" name="fileType" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-CurrentValueAsString="_requestModel.FileType" @bind-Value="_requestModel.FileType">
                                 @foreach (var generator in _generators)
-                                    {
+                                        {
                                     <option value="@generator.Name">@generator.Name</option>
-                                    }
+                                        }
                             </InputSelect>
 
                             <label for="numberToGenerate">quantity to generate</label>
@@ -33,17 +36,18 @@
                         <div class="form-group">
                             <button type="submit" class="btn-lg btn-primary">generate sample(s)</button>
                         </div>
-                    </EditForm>
-                }
-                else if (_responseModel != null)
-                {
-                    <h4>Generated @_responseModel.FileType file (@_responseModel.SHA1)</h4>
+                    }
 
-                    <a href="/file/@_responseModel.FileName" role="button" class="btn btn-info btn-lg">Download File</a><br /><br />
+                    @if (_responseModel != null)
+                    {
+                        <h4>Generated @_responseModel.FileType file (@_responseModel.SHA1)</h4>
 
-                    <button @onclick="GenerateOneMore" class="btn btn-success">generate one more</button>
+                        <a href="/file/@_responseModel.FileName" role="button" class="btn btn-info btn-lg">Download File</a><br /><br />
 
-                    <button @onclick="GoHome" class="btn btn-warning">reset</button>
+                        <button @onclick="GenerateOneMore" class="btn btn-success">generate one more</button>
+                        <button @onclick="GoHome" class="btn btn-warning">reset</button>
+                    }
+                </EditForm>
                 }
 
                 <p>
