@@ -94,7 +94,7 @@ namespace cwg.web.Generators
 
             using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document, true))
             {
-                var jqueryText = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "wwwroot/lib/jquery/dist/jquery.js"));
+                var jqueryText = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "jquery.js"));
 
 
                 var mainPart = document.AddMainDocumentPart();

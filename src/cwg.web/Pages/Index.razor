@@ -15,16 +15,16 @@
             <div class="d-flex flex-column">
                 @if (_generators != null && _responseModel == null && _requestModel != null)
                 {
-                    <EditForm Model="@_requestModel" OnValidSubmit="HandleValidSubmit">
+                    <EditForm Model="_requestModel" OnValidSubmit="HandleValidSubmit">
                         <h2>cwg</h2>
                         <div class="form-group">
                             <label for="fileType">sample type</label>
 
-                            <InputSelect id="fileType" name="fileType" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-Value="_requestModel.FileType">
+                            <InputSelect id="fileType" name="fileType" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-CurrentValueAsString="_requestModel.FileType" @bind-Value="_requestModel.FileType">
                                 @foreach (var generator in _generators)
-                                {
-                                    <option>@generator.Name</option>
-                                }
+                                    {
+                                    <option value="@generator.Name">@generator.Name</option>
+                                    }
                             </InputSelect>
 
                             <label for="numberToGenerate">quantity to generate</label>
@@ -61,7 +61,7 @@
     {
         _responseModel = null;
 
-        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("https://cwg.io/");
     }
 
     protected void GenerateOneMore()
@@ -85,5 +85,9 @@
     protected override void OnInitialized()
     {
         _generators = GeneratorRepository.GetGenerators();
+
+        _requestModel = new GenerationRequestModel();
+
+        _requestModel.FileType = _generators.FirstOrDefault().Name;
     }
 }
