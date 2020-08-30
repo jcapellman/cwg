@@ -16,7 +16,7 @@
                 @if (_generators != null && _requestModel != null)
                 {
                 <EditForm Model="_requestModel" OnValidSubmit="HandleValidSubmit">
-                    <h2><a @onclick="Refresh">cwg</a></h2>
+                    <h2 style="color: cornflowerblue"><a @onclick="Refresh">File Generator</a></h2>
 
                     @if (_responseModel == null)
                     {
@@ -30,6 +30,8 @@
                                         }
                             </InputSelect>
 
+                            <br/>
+
                             <label for="numberToGenerate">quantity to generate</label>
                             <InputNumber @bind-Value="_requestModel.NumberToGenerate" id="numberToGenerate" name="numberToGenerate" type="number" min="1" max="500" step="1" placeholder="number to generate" class="form-control" style="max-width: 200px; text-align: center; margin: 0 auto" />
                         </div>
@@ -40,7 +42,8 @@
 
                     @if (_responseModel != null)
                     {
-                        <h4>Generated @_responseModel.FileType file (@_responseModel.SHA1)</h4>
+                        <h5>Generated @_responseModel.FileType file</h5>
+                        <span style="font-size: x-small">SHA1:</span> <span style="font-size: small">@_responseModel.SHA1</span><br/><br/>
 
                         <a href="/file/@_responseModel.FileName" role="button" class="btn btn-info btn-lg">Download File</a><br /><br />
 
