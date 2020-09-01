@@ -12,21 +12,29 @@ namespace cwg.web.Data
 
         public GenerationResponseModel GenerateFile(GenerationRequestModel model)
         {
-            var generator = GetGenerator(model.FileType);
-
-            if (generator == null)
+            try
             {
-                throw new Exception($"{model.FileType} was not found");
+                var generator = GetGenerator(model.FileType);
+
+                if (generator == null)
+                {
+                    throw new Exception($"{model.FileType} was not found");
+                }
+
+                var (sha1, fileName) = generator.GenerateFiles(model.NumberToGenerate);
+
+                return new GenerationResponseModel
+                {
+                    FileName = fileName,
+                    SHA1 = sha1,
+                    FileType = model.FileType
+                };
+            } catch (Exception ex)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"Failed to GenerateFile ({model.FileType}): {ex}");
+
+                return null;
             }
-
-            var (sha1, fileName) = generator.GenerateFiles(model.NumberToGenerate);
-
-            return new GenerationResponseModel
-            {
-                FileName = fileName,
-                SHA1 = sha1,
-                FileType = model.FileType
-            };
         }
     }
 }
