@@ -1,10 +1,10 @@
 # cwg
-Cleanware Generator as an ASP.NET Core Service
+EICAR File Generator as a Blazor (C#) Web App
 
 The idea behind this came up when testing whether or not an AV would alert on a file.  Not wanting to use real malicious files, this was born.  As time has gone on, I have added more and more file types to the list, while also updating the "squirelly-ness" of the files as AV's have gotten "smarter" about false positives.
 
 #### Currently supported file types: ####
-* 7z
+* DLL
 * DOCX
 * ELF
 * GZip
@@ -13,8 +13,6 @@ The idea behind this came up when testing whether or not an AV would alert on a 
 * PE32
 * PE32+
 * Powershell
-* Rar
 * Tar
 * XLS
 * XLSM
-* ZIP
