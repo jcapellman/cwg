@@ -23,7 +23,7 @@
       <Version>5.5.13.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0-preview.8.20407.11" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0-preview.8.20419.1" />
     <PackageReference Include="NLog" Version="4.7.4" />
     <PackageReference Include="SharpCompress" Version="0.26.0" />
     <PackageReference Include="System.IO.Compression.ZipFile">
