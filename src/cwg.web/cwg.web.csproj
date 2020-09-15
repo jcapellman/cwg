@@ -20,10 +20,10 @@
     </PackageReference>
     <PackageReference Include="DotNetCore.NPOI" Version="1.2.2" />
     <PackageReference Include="iTextSharp">
-      <Version>5.5.13.1</Version>
+      <Version>5.5.13.2</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0-preview.8.20407.11" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0-preview.8.20419.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0-rc.1.20451.14" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0-rc.1.20453.2" />
     <PackageReference Include="NLog" Version="4.7.4" />
     <PackageReference Include="SharpCompress" Version="0.26.0" />
     <PackageReference Include="System.IO.Compression.ZipFile">
