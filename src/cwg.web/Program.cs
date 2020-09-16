@@ -7,6 +7,8 @@ namespace cwg.web
     {
         public static void Main(string[] args)
         {
+            NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+
             CreateHostBuilder(args).Build().Run();
         }
 
