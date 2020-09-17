@@ -90,8 +90,6 @@ namespace cwg.web.Generators
 
         protected override (string sha1, string fileName) Generate(bool bosartige)
         {
-            try
-            {
                 var fileName = $"{DateTime.Now.Ticks}.docx";
 
                 if (bosartige)
@@ -177,12 +175,6 @@ namespace cwg.web.Generators
                 File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.docx"), bytes);
 
                 return (sha1Sum, $"{sha1Sum}.docx");
-            } catch (Exception ex)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"DOCXGenerator: Exception - {ex}");
-
-                return (null, null);
-            }
         }
     }
 }
