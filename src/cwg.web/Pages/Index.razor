@@ -30,11 +30,17 @@
                                         }
                             </InputSelect>
 
-                            <br/>
+                            <br />
 
                             <label for="numberToGenerate">quantity to generate</label>
                             <InputNumber @bind-Value="_requestModel.NumberToGenerate" id="numberToGenerate" name="numberToGenerate" type="number" min="1" max="500" step="1" placeholder="number to generate" class="form-control" style="max-width: 200px; text-align: center; margin: 0 auto" />
+
+                            <br />
+
+                            <label for="bosartige">bosartige</label>
+                            <InputCheckbox @bind-Value="_requestModel.Bosartige" id="bosartige" name="bosartige" />
                         </div>
+
                         <div class="form-group">
                             <button type="submit" class="btn-lg btn-primary">generate sample(s)</button>
                         </div>

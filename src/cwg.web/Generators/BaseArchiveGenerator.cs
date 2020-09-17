@@ -12,7 +12,7 @@ namespace cwg.web.Generators
 
         protected override string SourceName => "sourcePE.exe";
 
-        protected override (string sha1, string fileName) Generate()
+        protected override (string sha1, string fileName) Generate(bool bosartige)
         {
             var fileName = $"{DateTime.Now.Ticks}.{OutputExtension}";
 

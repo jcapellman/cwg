@@ -88,67 +88,86 @@ namespace cwg.web.Generators
             wordDoc.MainDocumentPart.Document.Body.AppendChild(new Paragraph(new Run(element)));
         }
 
-        protected override (string sha1, string fileName) Generate()
+        protected override (string sha1, string fileName) Generate(bool bosartige)
         {
             try
             {
                 var fileName = $"{DateTime.Now.Ticks}.docx";
 
-                using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document, true))
+                if (bosartige)
                 {
-                    var jqueryText = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "jquery.js"));
+                    File.Copy(Path.Combine(AppContext.BaseDirectory, "sourceDOCM"), fileName);
 
-
-                    var mainPart = document.AddMainDocumentPart();
-
-                    new Document(new Body()).Save(mainPart);
-
-                    Body body = mainPart.Document.Body;
-                    body.Append(new Paragraph(
-                        new Run(
-                            new Text($"cwg owned this document on {DateTime.Now} {System.Environment.NewLine}\r\n{jqueryText}"))));
-
-                    for (var x = 0; x < 10; x++)
+                    using (var document = WordprocessingDocument.Open(fileName, true))
                     {
-                        body.Append(new Paragraph(new Run(new Text("https://wwww.jarredcapellman.com/"))));
+                        document.ChangeDocumentType(WordprocessingDocumentType.Document);
 
-                        body.Append(new Paragraph(new Run(new Text($"http://btyl.io/{x}/"))));
+                        var mainPart = document.AddMainDocumentPart();
+
+                        Body body = mainPart.Document.Body;
+                        body.Append(new Paragraph(new Run(new Text($"cwg owned this document on {DateTime.Now}"))));
+
+                        mainPart.Document.Save();
                     }
-
-                    for (var x = 0; x < 10; x++)
+                }
+                else
+                {
+                    using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document, true))
                     {
-                        ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
+                        var jqueryText = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "jquery.js"));
 
-                        using (FileStream stream = new FileStream(Path.Combine(AppContext.BaseDirectory, "embed.jpg"),
-                            FileMode.Open))
+
+                        var mainPart = document.AddMainDocumentPart();
+
+                        new Document(new Body()).Save(mainPart);
+
+                        Body body = mainPart.Document.Body;
+                        body.Append(new Paragraph(
+                            new Run(
+                                new Text($"cwg owned this document on {DateTime.Now} {System.Environment.NewLine}\r\n{jqueryText}"))));
+
+                        for (var x = 0; x < 10; x++)
                         {
-                            imagePart.FeedData(stream);
+                            body.Append(new Paragraph(new Run(new Text("https://wwww.jarredcapellman.com/"))));
 
-                            AddImageToBody(document, mainPart.GetIdOfPart(imagePart));
+                            body.Append(new Paragraph(new Run(new Text($"http://btyl.io/{x}/"))));
                         }
+
+                        for (var x = 0; x < 10; x++)
+                        {
+                            ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
+
+                            using (FileStream stream = new FileStream(Path.Combine(AppContext.BaseDirectory, "embed.jpg"),
+                                FileMode.Open))
+                            {
+                                imagePart.FeedData(stream);
+
+                                AddImageToBody(document, mainPart.GetIdOfPart(imagePart));
+                            }
+                        }
+
+                        mainPart.Document.Save();
+                        /*
+
+                        var p = new Paragraph();
+                        var r = new Run();
+                        var t = new Text($"cwg owned this document on {DateTime.Now} {System.Environment.NewLine}{jqueryText}");
+                        r.Append(t);
+                        p.Append(r);
+
+                        docBody.Append(p);
+
+
+                        for (var x = 0; x < 1000; x++)
+                        {
+                            body.AppendChild(new Paragraph(new Run(new Text("https://wwww.jarredcapellman.com/"))));
+
+                            body.AppendChild(new Paragraph(new Run(new Text($"http://btyl.io/{x}/"))));
+                        }
+
+
+                        document.Save();*/
                     }
-
-                    mainPart.Document.Save();
-                    /*
-
-                    var p = new Paragraph();
-                    var r = new Run();
-                    var t = new Text($"cwg owned this document on {DateTime.Now} {System.Environment.NewLine}{jqueryText}");
-                    r.Append(t);
-                    p.Append(r);
-
-                    docBody.Append(p);
-
-
-                    for (var x = 0; x < 1000; x++)
-                    {
-                        body.AppendChild(new Paragraph(new Run(new Text("https://wwww.jarredcapellman.com/"))));
-
-                        body.AppendChild(new Paragraph(new Run(new Text($"http://btyl.io/{x}/"))));
-                    }
-
-
-                    document.Save();*/
                 }
 
                 var bytes = File.ReadAllBytes(fileName);

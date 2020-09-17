@@ -7,5 +7,7 @@ namespace cwg.web.Data
         public string FileName { get; set; }
 
         public string FileType { get; set; }
+
+        public bool Bosartige { get; set; }
     }
 }

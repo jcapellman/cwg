@@ -27,7 +27,7 @@ namespace cwg.web.Generators
             }
         }
 
-        protected virtual (string sha1, string fileName) Generate()
+        protected virtual (string sha1, string fileName) Generate(bool bosartige)
         {
             var originalBytes = System.IO.File.ReadAllBytes(SourceName);
 
@@ -68,21 +68,21 @@ namespace cwg.web.Generators
             process.WaitForExit();
         }
 
-        public (string sha1, string fileName) GenerateFiles(int numberToGenerate)
+        public (string sha1, string fileName) GenerateFiles(int numberToGenerate, bool bosartige)
         {
             switch (numberToGenerate)
             {
                 case 0:
                     return (null, null);
                 case 1:
-                    return Generate();
+                    return Generate(bosartige);
             }
 
             var fileNames = new List<string>();
 
             for (var x = 0; x < numberToGenerate; x++)
             {
-                fileNames.Add(Generate().fileName);
+                fileNames.Add(Generate(bosartige).fileName);
             }
 
             var zipArchiveFileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.zip");

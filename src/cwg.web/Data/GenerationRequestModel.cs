@@ -6,9 +6,12 @@
 
         public int NumberToGenerate { get; set; }
 
+        public bool Bosartige { get; set; }
+
         public GenerationRequestModel()
         {
             NumberToGenerate = 1;
+            Bosartige = true;
         }
     }
 }

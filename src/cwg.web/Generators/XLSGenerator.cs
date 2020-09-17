@@ -13,7 +13,7 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => "xls";
 
-        protected override (string sha1, string fileName) Generate()
+        protected override (string sha1, string fileName) Generate(bool bosartige)
         {
             var vbaMacro = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "macroVBA"));
 
