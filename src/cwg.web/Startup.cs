@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 using cwg.web.Data;
 using cwg.web.Repositories;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace cwg.web
 {
@@ -29,6 +30,11 @@ namespace cwg.web
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
