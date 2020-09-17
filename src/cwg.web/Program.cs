@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+using NLog.Web;
 
 namespace cwg.web
 {
@@ -7,7 +10,7 @@ namespace cwg.web
     {
         public static void Main(string[] args)
         {
-            NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
             CreateHostBuilder(args).Build().Run();
         }
@@ -18,6 +21,11 @@ namespace cwg.web
                 {
                     webBuilder.UseStartup<Startup>()
                     .UseUrls("http://0.0.0.0:5001");
-                });
+                }).ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                })
+            .UseNLog();
     }
 }
