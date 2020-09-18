@@ -90,7 +90,7 @@ namespace cwg.web.Generators
 
         protected override (string sha1, string fileName) Generate(bool bosartige)
         {
-                var fileName = $"{DateTime.Now.Ticks}.docx";
+                var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.docx");
 
                 if (bosartige)
                 {
