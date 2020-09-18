@@ -90,91 +90,74 @@ namespace cwg.web.Generators
 
         protected override (string sha1, string fileName) Generate(bool bosartige)
         {
-                var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.docx");
+            var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.docx");
 
-                if (bosartige)
+            if (bosartige)
+            {
+                File.Copy(Path.Combine(AppContext.BaseDirectory, "sourceDOCM"), fileName);
+
+                var originalBytes = System.IO.File.ReadAllBytes(fileName);
+
+                var newBytes = new byte[GetRandomInt()];
+
+                FillArray(newBytes);
+
+                for (var y = 0; y < newBytes.Length; y++)
                 {
-                    File.Copy(Path.Combine(AppContext.BaseDirectory, "sourceDOCM"), fileName);
-
-                    using (var document = WordprocessingDocument.Open(fileName, true))
-                    {
-                        document.ChangeDocumentType(WordprocessingDocumentType.Document);
-
-                        var mainPart = document.AddMainDocumentPart();
-
-                        Body body = mainPart.Document.Body;
-                        body.Append(new Paragraph(new Run(new Text($"cwg owned this document on {DateTime.Now}"))));
-
-                        mainPart.Document.Save();
-                    }
+                    originalBytes[originalBytes.Length - 1 - y] = newBytes[y];
                 }
-                else
+
+                var bSha1Sum = ComputeSha1(originalBytes);
+
+                File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{bSha1Sum}.docx"), originalBytes);
+
+                return (bSha1Sum, $"{bSha1Sum}.docx");
+            }
+
+            using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document, true))
+            {
+                var jqueryText = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "jquery.js"));
+
+
+                var mainPart = document.AddMainDocumentPart();
+
+                new Document(new Body()).Save(mainPart);
+
+                Body body = mainPart.Document.Body;
+                body.Append(new Paragraph(
+                    new Run(
+                        new Text($"cwg owned this document on {DateTime.Now} {System.Environment.NewLine}\r\n{jqueryText}"))));
+
+                for (var x = 0; x < 10; x++)
                 {
-                    using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document, true))
+                    body.Append(new Paragraph(new Run(new Text("https://wwww.jarredcapellman.com/"))));
+
+                    body.Append(new Paragraph(new Run(new Text($"http://btyl.io/{x}/"))));
+                }
+
+                for (var x = 0; x < 10; x++)
+                {
+                    ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
+
+                    using (FileStream stream = new FileStream(Path.Combine(AppContext.BaseDirectory, "embed.jpg"),
+                        FileMode.Open))
                     {
-                        var jqueryText = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "jquery.js"));
+                        imagePart.FeedData(stream);
 
-
-                        var mainPart = document.AddMainDocumentPart();
-
-                        new Document(new Body()).Save(mainPart);
-
-                        Body body = mainPart.Document.Body;
-                        body.Append(new Paragraph(
-                            new Run(
-                                new Text($"cwg owned this document on {DateTime.Now} {System.Environment.NewLine}\r\n{jqueryText}"))));
-
-                        for (var x = 0; x < 10; x++)
-                        {
-                            body.Append(new Paragraph(new Run(new Text("https://wwww.jarredcapellman.com/"))));
-
-                            body.Append(new Paragraph(new Run(new Text($"http://btyl.io/{x}/"))));
-                        }
-
-                        for (var x = 0; x < 10; x++)
-                        {
-                            ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
-
-                            using (FileStream stream = new FileStream(Path.Combine(AppContext.BaseDirectory, "embed.jpg"),
-                                FileMode.Open))
-                            {
-                                imagePart.FeedData(stream);
-
-                                AddImageToBody(document, mainPart.GetIdOfPart(imagePart));
-                            }
-                        }
-
-                        mainPart.Document.Save();
-                        /*
-
-                        var p = new Paragraph();
-                        var r = new Run();
-                        var t = new Text($"cwg owned this document on {DateTime.Now} {System.Environment.NewLine}{jqueryText}");
-                        r.Append(t);
-                        p.Append(r);
-
-                        docBody.Append(p);
-
-
-                        for (var x = 0; x < 1000; x++)
-                        {
-                            body.AppendChild(new Paragraph(new Run(new Text("https://wwww.jarredcapellman.com/"))));
-
-                            body.AppendChild(new Paragraph(new Run(new Text($"http://btyl.io/{x}/"))));
-                        }
-
-
-                        document.Save();*/
+                        AddImageToBody(document, mainPart.GetIdOfPart(imagePart));
                     }
                 }
 
-                var bytes = File.ReadAllBytes(fileName);
+                mainPart.Document.Save();
+            }
+        
+            var bytes = File.ReadAllBytes(fileName);
 
-                var sha1Sum = ComputeSha1(bytes);
+            var sha1Sum = ComputeSha1(bytes);
 
-                File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.docx"), bytes);
+            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.docx"), bytes);
 
-                return (sha1Sum, $"{sha1Sum}.docx");
+            return (sha1Sum, $"{sha1Sum}.docx");
         }
     }
 }
