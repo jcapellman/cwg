@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\FetchData.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="sourceDOCX" />
   </ItemGroup>
 
