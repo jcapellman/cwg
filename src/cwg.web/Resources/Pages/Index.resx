@@ -120,4 +120,7 @@
   <data name="FileGenerator" xml:space="preserve">
     <value>File Generator</value>
   </data>
+  <data name="MoreMalicious" xml:space="preserve">
+    <value>More Malicious</value>
+  </data>
 </root>
