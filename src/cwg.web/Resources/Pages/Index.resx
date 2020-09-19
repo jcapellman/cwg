@@ -117,10 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="DownloadFile" xml:space="preserve">
+    <value>Download File</value>
+  </data>
   <data name="FileGenerator" xml:space="preserve">
     <value>File Generator</value>
   </data>
+  <data name="GenerateSamples" xml:space="preserve">
+    <value>Generate Sample(s)</value>
+  </data>
   <data name="MoreMalicious" xml:space="preserve">
     <value>More Malicious</value>
+  </data>
+  <data name="QuantityToGenerate" xml:space="preserve">
+    <value>quantity to generate</value>
+  </data>
+  <data name="SampleType" xml:space="preserve">
+    <value>sample type</value>
   </data>
 </root>
