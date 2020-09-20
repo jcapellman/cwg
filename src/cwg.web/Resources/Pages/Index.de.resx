@@ -126,8 +126,14 @@
   <data name="FileGenerator" xml:space="preserve">
     <value>Dateigenerator</value>
   </data>
+  <data name="GenerateOneMore" xml:space="preserve">
+    <value>generieren Sie eine weitere</value>
+  </data>
   <data name="GenerateSamples" xml:space="preserve">
     <value>Beispiel generieren</value>
+  </data>
+  <data name="GoHome" xml:space="preserve">
+    <value>geh nach haus</value>
   </data>
   <data name="MoreMalicious" xml:space="preserve">
     <value>Böswilliger</value>
@@ -137,5 +143,8 @@
   </data>
   <data name="SampleType" xml:space="preserve">
     <value>Beispieltyp</value>
+  </data>
+  <data name="SourceCode" xml:space="preserve">
+    <value>quellcode</value>
   </data>
 </root>
