@@ -52,21 +52,21 @@
 
                         @if (_responseModel != null)
                         {
-                            <h5>Generated @_responseModel.FileType file</h5>
+                            <h5>@Localizer["Generated"] @_responseModel.FileType @Localizer["File"]</h5>
                             <span style="font-size: x-small">SHA1:</span> <span style="font-size: small">@_responseModel.SHA1</span><br /><br />
 
                             <a href="/file/@_responseModel.FileName" target="_blank" role="button" class="btn btn-info btn-lg">@Localizer["DownloadFile"]</a><br /><br />
 
                             <button @onclick="GenerateOneMore" class="btn btn-success">@Localizer["GenerateOnMore"]</button><br /><br />
 
-                            <button @onclick="Refresh" class="btn btn-warning">@Localizer["GoHome"] | reset generator</button>
+                            <button @onclick="Refresh" class="btn btn-warning">@Localizer["GoHome"] | @Localizer["ResetGenerator"]</button>
                         }
                     </EditForm>
                 }
 
                 <p style="margin-top: 20px;font-size:x-small">
                     @Localizer["CreatedBy"] <a href="http://www.jarredcapellman.com" target="_blank">Jarred Capellman</a> | <a href="https://github.com/jcapellman/cwg" target="_blank">@Localizer["SourceCode"]</a><br />
-                    Version 2020.9.4
+                    Version 2020.9.5
                 </p>
             </div>
         </div>

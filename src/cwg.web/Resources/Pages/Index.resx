@@ -123,8 +123,14 @@
   <data name="DownloadFile" xml:space="preserve">
     <value>Download File</value>
   </data>
+  <data name="File" xml:space="preserve">
+    <value>file</value>
+  </data>
   <data name="FileGenerator" xml:space="preserve">
     <value>File Generator</value>
+  </data>
+  <data name="Generated" xml:space="preserve">
+    <value>Generated</value>
   </data>
   <data name="GenerateOneMore" xml:space="preserve">
     <value>generate one more</value>
@@ -140,6 +146,9 @@
   </data>
   <data name="QuantityToGenerate" xml:space="preserve">
     <value>quantity to generate</value>
+  </data>
+  <data name="ResetGenerator" xml:space="preserve">
+    <value>reset generator</value>
   </data>
   <data name="SampleType" xml:space="preserve">
     <value>sample type</value>
