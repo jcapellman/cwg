@@ -141,6 +141,9 @@
   <data name="GoHome" xml:space="preserve">
     <value>go home</value>
   </data>
+  <data name="Injection" xml:space="preserve">
+    <value>injection (optional)</value>
+  </data>
   <data name="MoreMalicious" xml:space="preserve">
     <value>More Malicious</value>
   </data>

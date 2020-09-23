@@ -8,6 +8,8 @@
 
         public bool Bosartige { get; set; }
 
+        public string Injection { get; set; }
+
         public GenerationRequestModel()
         {
             NumberToGenerate = 1;

@@ -38,7 +38,7 @@ namespace cwg.web.Generators
             return System.Convert.ToBase64String(encrypted, Base64FormattingOptions.None);
         }
 
-        protected override (string sha1, string fileName) Generate(bool bosartige)
+        protected override (string sha1, string fileName) Generate(bool bosartige, string injection)
         {
             var sourceFile = File.ReadAllText(SourceName);
 

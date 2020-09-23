@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace cwg.web.Generators
 {
@@ -27,9 +29,18 @@ namespace cwg.web.Generators
             }
         }
 
-        protected virtual (string sha1, string fileName) Generate(bool bosartige)
+        protected virtual (string sha1, string fileName) Generate(bool bosartige, string injection)
         {
-            var originalBytes = System.IO.File.ReadAllBytes(SourceName);
+            var injectionBytes = new List<byte>();
+
+            if (!string.IsNullOrEmpty(injection))
+            {
+                injectionBytes = ASCIIEncoding.Default.GetBytes(injection).ToList();
+            }
+
+            var originalBytes = System.IO.File.ReadAllBytes(SourceName).ToList();
+
+            originalBytes.AddRange(injectionBytes);
 
             var newBytes = new byte[GetRandomInt()];
 
@@ -37,12 +48,12 @@ namespace cwg.web.Generators
 
             for (var y = 0; y < newBytes.Length; y++)
             {
-                originalBytes[originalBytes.Length - 1 - y] = newBytes[y];
+                originalBytes[originalBytes.Count - 1 - y] = newBytes[y];
             }
 
-            var sha1Sum = ComputeSha1(originalBytes);
+            var sha1Sum = ComputeSha1(originalBytes.ToArray());
 
-            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}"), originalBytes);
+            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}"), originalBytes.ToArray());
 
             return (sha1Sum, $"{sha1Sum}.{OutputExtension}");
         }
@@ -68,21 +79,21 @@ namespace cwg.web.Generators
             process.WaitForExit();
         }
 
-        public (string sha1, string fileName) GenerateFiles(int numberToGenerate, bool bosartige)
+        public (string sha1, string fileName) GenerateFiles(int numberToGenerate, bool bosartige, string injection)
         {
             switch (numberToGenerate)
             {
                 case 0:
                     return (null, null);
                 case 1:
-                    return Generate(bosartige);
+                    return Generate(bosartige, injection);
             }
 
             var fileNames = new List<string>();
 
             for (var x = 0; x < numberToGenerate; x++)
             {
-                fileNames.Add(Generate(bosartige).fileName);
+                fileNames.Add(Generate(bosartige, injection).fileName);
             }
 
             var zipArchiveFileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.zip");

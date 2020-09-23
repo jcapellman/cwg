@@ -13,7 +13,7 @@ namespace cwg.web.Generators
         protected override string SourceName => "sourceXLSM";
         protected override string OutputExtension => "xlsm";
 
-        protected override (string sha1, string fileName) Generate(bool bosartige)
+        protected override (string sha1, string fileName) Generate(bool bosartige, string injection)
         {
             var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.xlsm");
             uint sheetId = 1;

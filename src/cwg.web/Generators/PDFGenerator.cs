@@ -14,7 +14,7 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => "pdf";
 
-        protected override (string sha1, string fileName) Generate(bool bosartige)
+        protected override (string sha1, string fileName) Generate(bool bosartige, string injection)
         {
             var doc = new Document(PageSize.A4);
 

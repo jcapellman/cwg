@@ -88,7 +88,7 @@ namespace cwg.web.Generators
             wordDoc.MainDocumentPart.Document.Body.AppendChild(new Paragraph(new Run(element)));
         }
 
-        protected override (string sha1, string fileName) Generate(bool bosartige)
+        protected override (string sha1, string fileName) Generate(bool bosartige, string injection)
         {
             var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.docx");
 

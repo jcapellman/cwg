@@ -21,7 +21,7 @@ namespace cwg.web.Data
                     throw new Exception($"{model.FileType} was not found");
                 }
 
-                var (sha1, fileName) = generator.GenerateFiles(model.NumberToGenerate, model.Bosartige);
+                var (sha1, fileName) = generator.GenerateFiles(model.NumberToGenerate, model.Bosartige, model.Injection);
 
                 return new GenerationResponseModel
                 {

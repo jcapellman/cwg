@@ -43,6 +43,11 @@
 
                                 <label for="bosartige">@Localizer["MoreMalicious"]</label>
                                 <InputCheckbox @bind-Value="_requestModel.Bosartige" id="bosartige" name="bosartige" />
+
+                                <br/><br/>
+
+                                <label for="injection">@Localizer["Injection"]</label><br/>
+                                <InputTextArea rows="4" @bind-Value="_requestModel.Injection" id="injection" name="injection" />
                             </div>
 
                             <div class="form-group">
@@ -66,7 +71,7 @@
 
                 <p style="margin-top: 20px;font-size:x-small">
                     @Localizer["CreatedBy"] <a href="http://www.jarredcapellman.com" target="_blank">Jarred Capellman</a> | <a href="https://github.com/jcapellman/cwg" target="_blank">@Localizer["SourceCode"]</a><br />
-                    Version 2020.9.5
+                    Version 2020.9.6
                 </p>
             </div>
         </div>

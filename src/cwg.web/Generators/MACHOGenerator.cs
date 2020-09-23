@@ -12,7 +12,7 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => ".macho";
 
-        protected override (string sha1, string fileName) Generate(bool bosartige)
+        protected override (string sha1, string fileName) Generate(bool bosartige, string injection)
         {
             var originalBytes = File.ReadAllBytes(SourceName);
             var machioBytes = File.ReadAllBytes("sourceMACHO");
