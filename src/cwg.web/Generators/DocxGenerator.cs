@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using cwg.web.Enums;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -88,11 +89,11 @@ namespace cwg.web.Generators
             wordDoc.MainDocumentPart.Document.Body.AppendChild(new Paragraph(new Run(element)));
         }
 
-        protected override (string sha1, string fileName) Generate(bool bosartige, string injection)
+        protected override (string sha1, string fileName) Generate(ThreatLevels threatLevel, string injection)
         {
             var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.docx");
 
-            if (bosartige)
+            if (threatLevel == ThreatLevels.MALICIOUS)
             {
                 File.Copy(Path.Combine(AppContext.BaseDirectory, "sourceDOCM"), fileName);
 

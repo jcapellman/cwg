@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-    
+
+using cwg.web.Enums;
+
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 
@@ -13,7 +15,7 @@ namespace cwg.web.Generators
         protected override string SourceName => "sourceXLSM";
         protected override string OutputExtension => "xlsm";
 
-        protected override (string sha1, string fileName) Generate(bool bosartige, string injection)
+        protected override (string sha1, string fileName) Generate(ThreatLevels threatLevel, string injection)
         {
             var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.xlsm");
             uint sheetId = 1;

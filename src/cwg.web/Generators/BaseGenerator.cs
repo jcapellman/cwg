@@ -6,6 +6,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using cwg.web.Enums;
 
 namespace cwg.web.Generators
 {
@@ -29,7 +30,7 @@ namespace cwg.web.Generators
             }
         }
 
-        protected virtual (string sha1, string fileName) Generate(bool bosartige, string injection)
+        protected virtual (string sha1, string fileName) Generate(ThreatLevels threatLevel, string injection)
         {
             var injectionBytes = new List<byte>();
 
@@ -79,21 +80,21 @@ namespace cwg.web.Generators
             process.WaitForExit();
         }
 
-        public (string sha1, string fileName) GenerateFiles(int numberToGenerate, bool bosartige, string injection)
+        public (string sha1, string fileName) GenerateFiles(int numberToGenerate, ThreatLevels threatLevel, string injection)
         {
             switch (numberToGenerate)
             {
                 case 0:
                     return (null, null);
                 case 1:
-                    return Generate(bosartige, injection);
+                    return Generate(threatLevel, injection);
             }
 
             var fileNames = new List<string>();
 
             for (var x = 0; x < numberToGenerate; x++)
             {
-                fileNames.Add(Generate(bosartige, injection).fileName);
+                fileNames.Add(Generate(threatLevel, injection).fileName);
             }
 
             var zipArchiveFileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.zip");

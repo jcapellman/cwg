@@ -1,4 +1,8 @@
-﻿namespace cwg.web.Data
+﻿using System;
+
+using cwg.web.Enums;
+
+namespace cwg.web.Data
 {
     public class GenerationRequestModel
     {
@@ -10,10 +14,17 @@
 
         public string Injection { get; set; }
 
+        public string ThreatLevel { get; set; }
+
+        public string[] SelectableThreatLevels { get; private set; }
+
         public GenerationRequestModel()
         {
             NumberToGenerate = 1;
             Bosartige = true;
+            ThreatLevel = ThreatLevels.ABNORMAL.ToString();
+
+            SelectableThreatLevels = Enum.GetNames(typeof(ThreatLevels));
         }
     }
 }

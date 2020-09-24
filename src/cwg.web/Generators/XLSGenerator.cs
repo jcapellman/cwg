@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-
+using cwg.web.Enums;
 using NPOI.HSSF.UserModel;
 
 namespace cwg.web.Generators
@@ -13,7 +13,7 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => "xls";
 
-        protected override (string sha1, string fileName) Generate(bool bosartige, string injection)
+        protected override (string sha1, string fileName) Generate(ThreatLevels threatLevel, string injection)
         {
             var vbaMacro = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "macroVBA"));
 

@@ -41,10 +41,15 @@
 
                                 <br />
 
-                                <label for="bosartige">@Localizer["MoreMalicious"]</label>
-                                <InputCheckbox @bind-Value="_requestModel.Bosartige" id="bosartige" name="bosartige" />
+                                <label for="bosartige">Threat Level</label>
+                                <InputSelect id="ThreatLevel" name="ThreatLevel" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-CurrentValueAsString="_requestModel.ThreatLevel" @bind-Value="_requestModel.ThreatLevel">
+                                    @foreach (var level in _requestModel.SelectableThreatLevels)
+                                    {
+                                        <option value="@level">@level</option>
+                                    }
+                                </InputSelect>
 
-                                <br/><br/>
+                                <br/>
 
                                 <label for="injection">@Localizer["Injection"]</label><br/>
                                 <InputTextArea rows="4" @bind-Value="_requestModel.Injection" id="injection" name="injection" />
@@ -71,7 +76,7 @@
 
                 <p style="margin-top: 20px;font-size:x-small">
                     @Localizer["CreatedBy"] <a href="http://www.jarredcapellman.com" target="_blank">Jarred Capellman</a> | <a href="https://github.com/jcapellman/cwg" target="_blank">@Localizer["SourceCode"]</a><br />
-                    Version 2020.9.6
+                    Version 2020.9.7
                 </p>
             </div>
         </div>

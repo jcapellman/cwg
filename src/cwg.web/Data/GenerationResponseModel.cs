@@ -8,6 +8,6 @@ namespace cwg.web.Data
 
         public string FileType { get; set; }
 
-        public bool Bosartige { get; set; }
+        public string ThreatLevel { get; set; }
     }
 }
