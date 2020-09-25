@@ -15,6 +15,8 @@ namespace cwg.web.Generators
         protected override string SourceName => "sourceXLSM";
         protected override string OutputExtension => "xlsm";
 
+        public override bool Packable => false;
+
         protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.xlsm");

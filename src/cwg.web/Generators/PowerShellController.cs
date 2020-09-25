@@ -15,6 +15,8 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => "ps1";
 
+        public override bool Packable => false;
+
         private string encryptString(string sourceString, string key, string iv)
         {
             byte[] encrypted;

@@ -7,5 +7,7 @@
         protected override string SourceName => "sourceELF";
 
         protected override string OutputExtension => "elf";
+
+        public override bool Packable => true;
     }
 }

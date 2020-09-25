@@ -7,5 +7,7 @@
         protected override string SourceName => "sourcePE+IL.exe";
 
         protected override string OutputExtension => "exe";
+
+        public override bool Packable => false;
     }
 }

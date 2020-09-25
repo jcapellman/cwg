@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <label for="fileType">@Localizer["SampleType"]</label>
 
-                                <InputSelect id="fileType" name="fileType" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-CurrentValueAsString="_requestModel.FileType" @bind-Value="_requestModel.FileType">
+                                <InputSelect id="fileType" name="fileType" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-CurrentValueAsString="_requestModel.FileType" @bind-Value="FileType">
                                     @foreach (var generator in _generators)
                                             {
                                         <option value="@generator.Name">@generator.Name</option>
@@ -57,7 +57,7 @@
                                 <br/>
 
                                 <label for="repack">@Localizer["Repack"]</label>
-                                <InputCheckbox @bind-Value="_requestModel.Repack" id="repack" name="repack" />
+                                <InputCheckbox @bind-Value="_requestModel.Repack" id="repack" disabled="@PackDisable" name="repack" />
                             </div>
 
                             <div class="form-group">
@@ -112,6 +112,22 @@
     }
 
     private IEnumerable<BaseGenerator> _generators;
+
+    public bool PackDisable;
+
+    public string FileType
+    {
+        get => _requestModel.FileType;
+
+        set
+        {
+            _requestModel.FileType = value;
+
+            var selectedGenerator = _generators.FirstOrDefault(a => a.Name == value);
+
+            PackDisable = !selectedGenerator.Packable;
+        }
+    }
 
     protected override void OnInitialized()
     {

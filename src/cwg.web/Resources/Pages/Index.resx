@@ -151,7 +151,7 @@
     <value>quantity to generate</value>
   </data>
   <data name="Repack" xml:space="preserve">
-    <value>Repack (only certain file types are supported)</value>
+    <value>repack</value>
   </data>
   <data name="ResetGenerator" xml:space="preserve">
     <value>reset generator</value>

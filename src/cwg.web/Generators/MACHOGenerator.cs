@@ -14,6 +14,8 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => ".macho";
 
+        public override bool Packable => true;
+
         protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var originalBytes = File.ReadAllBytes(SourceName);

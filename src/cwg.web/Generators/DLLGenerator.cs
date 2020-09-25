@@ -7,5 +7,7 @@
         protected override string SourceName => "sourceDLL";
 
         protected override string OutputExtension => "dll";
+
+        public override bool Packable => true;
     }
 }

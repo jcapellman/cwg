@@ -19,6 +19,8 @@ namespace cwg.web.Generators
 
         protected abstract string OutputExtension { get; }    
 
+        public abstract bool Packable { get; }
+
         protected static int GetRandomInt(int min = 1, int max = 100) => new Random((int)DateTime.Now.Ticks).Next(min, max);
 
         protected static void FillArray(byte[] bytes) => new Random((int)DateTime.Now.Ticks).NextBytes(bytes);

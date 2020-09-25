@@ -21,6 +21,8 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => "docx";
 
+        public override bool Packable => false;
+
         private static void AddImageToBody(WordprocessingDocument wordDoc, string relationshipId)
         {
             // Define the reference of the image.

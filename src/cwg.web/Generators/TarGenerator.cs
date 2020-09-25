@@ -8,6 +8,8 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => "tar";
 
+        public override bool Packable => false;
+
         protected override ArchiveType CurrentArchiveType => ArchiveType.Tar;
     }
 }

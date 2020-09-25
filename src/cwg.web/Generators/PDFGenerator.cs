@@ -16,6 +16,8 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => "pdf";
 
+        public override bool Packable => false;
+
         protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var doc = new Document(PageSize.A4);

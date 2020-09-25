@@ -9,5 +9,7 @@ namespace cwg.web.Generators
         protected override string OutputExtension => "gzip";
 
         protected override ArchiveType CurrentArchiveType => ArchiveType.GZip;
+
+        public override bool Packable => false;
     }
 }
