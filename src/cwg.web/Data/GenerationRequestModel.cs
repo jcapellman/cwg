@@ -16,12 +16,17 @@ namespace cwg.web.Data
 
         public string ThreatLevel { get; set; }
 
+        public ThreatLevels ThreatLevelEnum => (ThreatLevels)Enum.Parse(typeof(ThreatLevels), ThreatLevel);
+
         public string[] SelectableThreatLevels { get; private set; }
+
+        public bool Repack { get; set; }
 
         public GenerationRequestModel()
         {
             NumberToGenerate = 1;
             Bosartige = true;
+            Repack = false;
             ThreatLevel = ThreatLevels.ABNORMAL.ToString();
 
             SelectableThreatLevels = Enum.GetNames(typeof(ThreatLevels));

@@ -6,7 +6,8 @@ using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using cwg.web.Enums;
+
+using cwg.web.Data;
 
 namespace cwg.web.Generators
 {
@@ -30,13 +31,13 @@ namespace cwg.web.Generators
             }
         }
 
-        protected virtual (string sha1, string fileName) Generate(ThreatLevels threatLevel, string injection)
+        protected virtual (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var injectionBytes = new List<byte>();
 
-            if (!string.IsNullOrEmpty(injection))
+            if (!string.IsNullOrEmpty(model.Injection))
             {
-                injectionBytes = ASCIIEncoding.Default.GetBytes(injection).ToList();
+                injectionBytes = ASCIIEncoding.Default.GetBytes(model.Injection).ToList();
             }
 
             var originalBytes = System.IO.File.ReadAllBytes(SourceName).ToList();
@@ -80,21 +81,21 @@ namespace cwg.web.Generators
             process.WaitForExit();
         }
 
-        public (string sha1, string fileName) GenerateFiles(int numberToGenerate, ThreatLevels threatLevel, string injection)
+        public (string sha1, string fileName) GenerateFiles(GenerationRequestModel model)
         {
-            switch (numberToGenerate)
+            switch (model.NumberToGenerate)
             {
                 case 0:
                     return (null, null);
                 case 1:
-                    return Generate(threatLevel, injection);
+                    return Generate(model);
             }
 
             var fileNames = new List<string>();
 
-            for (var x = 0; x < numberToGenerate; x++)
+            for (var x = 0; x < model.NumberToGenerate; x++)
             {
-                fileNames.Add(Generate(threatLevel, injection).fileName);
+                fileNames.Add(Generate(model).fileName);
             }
 
             var zipArchiveFileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.zip");

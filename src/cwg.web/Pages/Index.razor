@@ -41,7 +41,7 @@
 
                                 <br />
 
-                                <label for="bosartige">Threat Level</label>
+                                <label for="ThreatLevel">Threat Level</label>
                                 <InputSelect id="ThreatLevel" name="ThreatLevel" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-CurrentValueAsString="_requestModel.ThreatLevel" @bind-Value="_requestModel.ThreatLevel">
                                     @foreach (var level in _requestModel.SelectableThreatLevels)
                                     {
@@ -53,6 +53,11 @@
 
                                 <label for="injection">@Localizer["Injection"]</label><br/>
                                 <InputTextArea rows="4" @bind-Value="_requestModel.Injection" id="injection" name="injection" />
+
+                                <br/>
+
+                                <label for="repack">Repack (only certain file types are supported)</label>
+                                <InputCheckbox @bind-Value="_requestModel.Repack" id="repack" name="repack" />
                             </div>
 
                             <div class="form-group">

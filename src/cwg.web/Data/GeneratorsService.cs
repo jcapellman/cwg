@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using cwg.web.Enums;
+
 using cwg.web.Generators;
 using cwg.web.Repositories;
 
@@ -21,7 +21,7 @@ namespace cwg.web.Data
                     throw new Exception($"{model.FileType} was not found");
                 }
 
-                var (sha1, fileName) = generator.GenerateFiles(model.NumberToGenerate, (ThreatLevels)Enum.Parse(typeof(ThreatLevels), model.ThreatLevel), model.Injection);
+                var (sha1, fileName) = generator.GenerateFiles(model);
 
                 return new GenerationResponseModel
                 {

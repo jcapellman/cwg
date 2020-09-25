@@ -2,7 +2,8 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using cwg.web.Enums;
+
+using cwg.web.Data;
 
 namespace cwg.web.Generators
 {
@@ -39,7 +40,7 @@ namespace cwg.web.Generators
             return System.Convert.ToBase64String(encrypted, Base64FormattingOptions.None);
         }
 
-        protected override (string sha1, string fileName) Generate(ThreatLevels threatLevel, string injection)
+        protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var sourceFile = File.ReadAllText(SourceName);
 

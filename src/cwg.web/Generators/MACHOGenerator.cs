@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using cwg.web.Enums;
+
+using cwg.web.Data;
 
 namespace cwg.web.Generators
 {
@@ -13,7 +14,7 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => ".macho";
 
-        protected override (string sha1, string fileName) Generate(ThreatLevels threatLevel, string injection)
+        protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var originalBytes = File.ReadAllBytes(SourceName);
             var machioBytes = File.ReadAllBytes(SourceName);

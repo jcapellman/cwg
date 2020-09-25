@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using cwg.web.Data;
 using cwg.web.Enums;
 using SharpCompress.Common;
 using SharpCompress.Writers;
@@ -12,7 +13,7 @@ namespace cwg.web.Generators
 
         protected override string SourceName => "sourcePE.exe";
 
-        protected override (string sha1, string fileName) Generate(ThreatLevels threatLevel, string injection)
+        protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var fileName = $"{DateTime.Now.Ticks}.{OutputExtension}";
 
