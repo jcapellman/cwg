@@ -41,7 +41,7 @@
 
                                 <br />
 
-                                <label for="ThreatLevel">Threat Level</label>
+                                <label for="ThreatLevel">@Localizer["ThreatLevel"]</label>
                                 <InputSelect id="ThreatLevel" name="ThreatLevel" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-CurrentValueAsString="_requestModel.ThreatLevel" @bind-Value="_requestModel.ThreatLevel">
                                     @foreach (var level in _requestModel.SelectableThreatLevels)
                                     {
@@ -56,7 +56,7 @@
 
                                 <br/>
 
-                                <label for="repack">Repack (only certain file types are supported)</label>
+                                <label for="repack">@Localizer["Repack"]</label>
                                 <InputCheckbox @bind-Value="_requestModel.Repack" id="repack" name="repack" />
                             </div>
 
@@ -81,7 +81,7 @@
 
                 <p style="margin-top: 20px;font-size:x-small">
                     @Localizer["CreatedBy"] <a href="http://www.jarredcapellman.com" target="_blank">Jarred Capellman</a> | <a href="https://github.com/jcapellman/cwg" target="_blank">@Localizer["SourceCode"]</a><br />
-                    Version 2020.9.7
+                    Version 2020.9.8
                 </p>
             </div>
         </div>

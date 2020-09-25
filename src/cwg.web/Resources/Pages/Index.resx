@@ -150,6 +150,9 @@
   <data name="QuantityToGenerate" xml:space="preserve">
     <value>quantity to generate</value>
   </data>
+  <data name="Repack" xml:space="preserve">
+    <value>Repack (only certain file types are supported)</value>
+  </data>
   <data name="ResetGenerator" xml:space="preserve">
     <value>reset generator</value>
   </data>
@@ -158,5 +161,8 @@
   </data>
   <data name="SourceCode" xml:space="preserve">
     <value>source code</value>
+  </data>
+  <data name="ThreatLevel" xml:space="preserve">
+    <value>threat level</value>
   </data>
 </root>
