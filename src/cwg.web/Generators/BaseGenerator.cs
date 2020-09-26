@@ -13,6 +13,19 @@ namespace cwg.web.Generators
 {
     public abstract class BaseGenerator
     {
+        private string UPXPath
+        {
+            get
+            {
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                {
+                    return "upx.exe";
+                }
+
+                return "upx";
+            }
+        }
+
         public abstract string Name { get; }
 
         protected abstract string SourceName { get; }
@@ -43,43 +56,53 @@ namespace cwg.web.Generators
 
         private (string sha1Sum, string fileName) Repack(string fileName)
         {
-            var process = new Process
+            try
             {
-                StartInfo = new ProcessStartInfo
+                var process = new Process
                 {
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    FileName = "upx",
-                    Arguments = $"{fileName} -d"
-                }
-            };
+                    StartInfo = new ProcessStartInfo
+                    {
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        FileName = UPXPath,
+                        Arguments = $"{fileName} -d"
+                    }
+                };
 
-            process.Start();
-            process.WaitForExit();
+                process.Start();
+                process.WaitForExit();
 
-            process = new Process
-            {
-                StartInfo = new ProcessStartInfo
+                process = new Process
                 {
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    FileName = "upx",
-                    Arguments = $"{fileName} -9"
+                    StartInfo = new ProcessStartInfo
+                    {
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        FileName = UPXPath,
+                        Arguments = $"{fileName} -9"
+                    }
+                };
+
+                process.Start();
+                process.WaitForExit();
+
+                var sha1Sum = ComputeSha1(fileName);
+                var finalFileName = Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}");
+
+                if (!File.Exists(finalFileName)) {
+                    File.Move(fileName, finalFileName);
                 }
-            };
 
-            process.Start();
-            process.WaitForExit();
+                return (sha1Sum, $"{sha1Sum}.{OutputExtension}");
+            } catch (Exception ex) {
+                NLog.LogManager.GetCurrentClassLogger().Error($"{fileName} - {ex}");
 
-            var sha1Sum = ComputeSha1(fileName);
-
-            File.Move(fileName, Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}"));
-
-            return (sha1Sum, $"{sha1Sum}.{OutputExtension}");
+                return (null, null);
+            }
         }
 
         protected virtual (string sha1, string fileName) Generate(GenerationRequestModel model)
