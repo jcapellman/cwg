@@ -33,16 +33,65 @@ namespace cwg.web.Generators
             }
         }
 
+        protected string ComputeSha1(string fileName)
+        {
+            using (var shaManager = new SHA1Managed())
+            {
+                return BitConverter.ToString(shaManager.ComputeHash(File.ReadAllBytes(fileName))).Replace("-", "");
+            }
+        }
+
+        private (string sha1Sum, string fileName) Repack(string fileName)
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    FileName = "upx",
+                    Arguments = $"{fileName} -d"
+                }
+            };
+
+            process.Start();
+            process.WaitForExit();
+
+            process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    FileName = "upx",
+                    Arguments = $"{fileName} -9"
+                }
+            };
+
+            process.Start();
+            process.WaitForExit();
+
+            var sha1Sum = ComputeSha1(fileName);
+
+            File.Move(fileName, Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}"));
+
+            return (sha1Sum, $"{sha1Sum}.{OutputExtension}");
+        }
+
         protected virtual (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var injectionBytes = new List<byte>();
 
             if (!string.IsNullOrEmpty(model.Injection))
             {
-                injectionBytes = ASCIIEncoding.Default.GetBytes(model.Injection).ToList();
+                injectionBytes = Encoding.Default.GetBytes(model.Injection).ToList();
             }
 
-            var originalBytes = System.IO.File.ReadAllBytes(SourceName).ToList();
+            var originalBytes = File.ReadAllBytes(SourceName).ToList();
 
             originalBytes.AddRange(injectionBytes);
 
@@ -57,7 +106,14 @@ namespace cwg.web.Generators
 
             var sha1Sum = ComputeSha1(originalBytes.ToArray());
 
-            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}"), originalBytes.ToArray());
+            var fileName = Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}");
+
+            File.WriteAllBytes(fileName, originalBytes.ToArray());
+
+            if (model.Repack)
+            {
+                return Repack(fileName);
+            }
 
             return (sha1Sum, $"{sha1Sum}.{OutputExtension}");
         }
