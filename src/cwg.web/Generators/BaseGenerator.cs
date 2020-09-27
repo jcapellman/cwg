@@ -54,42 +54,33 @@ namespace cwg.web.Generators
             }
         }
 
+        private static void LaunchProcess(string fileName, string argument)
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    FileName = fileName,
+                    Arguments = argument
+                }
+            };
+
+            process.Start();
+            process.WaitForExit();
+        }
+
         private (string sha1Sum, string fileName) Repack(string fileName)
         {
             try
             {
-                var process = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        FileName = UPXPath,
-                        Arguments = $"{fileName} -d"
-                    }
-                };
+                LaunchProcess(UPXPath, $"{fileName} -d");
 
-                process.Start();
-                process.WaitForExit();
-
-                process = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        FileName = UPXPath,
-                        Arguments = $"{fileName} -9"
-                    }
-                };
-
-                process.Start();
-                process.WaitForExit();
-
+                LaunchProcess(UPXPath, $"{fileName} -9");
+                
                 var sha1Sum = ComputeSha1(fileName);
                 var finalFileName = Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}");
 
@@ -145,21 +136,7 @@ namespace cwg.web.Generators
         {
             var escapedArgs = cmd.Replace("\"", "\\\"");
 
-            var process = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    FileName = "/bin/bash",
-                    Arguments = $"-c \"{escapedArgs}\""
-                }
-            };
-
-            process.Start();
-            process.WaitForExit();
+            LaunchProcess("/bin/bash", $"-c \"{escapedArgs}\"");
         }
 
         public (string sha1, string fileName) GenerateFiles(GenerationRequestModel model)
