@@ -62,6 +62,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="source.c" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
