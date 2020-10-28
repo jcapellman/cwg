@@ -2,7 +2,7 @@
 {
     public class ELFGenerator : BaseGenerator
     {
-        public override string Name => "ELF";
+        public override string Name => "ELF (x86)";
 
         protected override string SourceName => "sourceELF";
 
