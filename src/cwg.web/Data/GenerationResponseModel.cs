@@ -9,5 +9,7 @@ namespace cwg.web.Data
         public string FileType { get; set; }
 
         public string ThreatLevel { get; set; }
+
+        public string FullPath { get; set; }
     }
 }

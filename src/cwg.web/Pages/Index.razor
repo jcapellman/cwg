@@ -4,12 +4,14 @@
 @using cwg.web.Data;
 @using cwg.web.Generators
 @using cwg.web.Repositories
+@using cwg.web.Services
 
 @using Microsoft.AspNetCore.Mvc.Localization
 
 @inject NavigationManager NavigationManager
 @inject GeneratorsService GeneratorService
 @inject GeneratorRepository Repository
+@inject ClipboardService CService
 
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Index> Localizer
 
@@ -44,17 +46,17 @@
                                 <label for="ThreatLevel">@Localizer["ThreatLevel"]</label>
                                 <InputSelect id="ThreatLevel" name="ThreatLevel" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-CurrentValueAsString="_requestModel.ThreatLevel" @bind-Value="_requestModel.ThreatLevel">
                                     @foreach (var level in _requestModel.SelectableThreatLevels)
-                                    {
+                                            {
                                         <option value="@level">@level</option>
-                                    }
+                                            }
                                 </InputSelect>
 
-                                <br/>
+                                <br />
 
-                                <label for="injection">@Localizer["Injection"]</label><br/>
+                                <label for="injection">@Localizer["Injection"]</label><br />
                                 <InputTextArea rows="4" @bind-Value="_requestModel.Injection" id="injection" name="injection" />
 
-                                <br/>
+                                <br />
 
                                 <label for="repack">@Localizer["Repack"]</label>
                                 <InputCheckbox @bind-Value="_requestModel.Repack" id="repack" disabled="@PackDisable" name="repack" />
@@ -72,6 +74,23 @@
 
                             <a href="/file/@_responseModel.FileName" target="_blank" role="button" class="btn btn-info btn-lg">@Localizer["DownloadFile"]</a><br /><br />
 
+                            <div>
+                                Download URL:
+                                <p style="box-shadow: 1px 1px 5px #555 inset;">
+                                    @_responseModel.FullPath
+                                </p>
+
+                                <button type="button" class="btn btn-outline-primary" @onclick="CopyTextToClipboard">
+                                    Copy to Clipboard
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+                                        <path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <br />
+
                             <button @onclick="GenerateOneMore" class="btn btn-success">@Localizer["GenerateOneMore"]</button><br /><br />
 
                             <button @onclick="Refresh" class="btn btn-warning">@Localizer["GoHome"] | @Localizer["ResetGenerator"]</button>
@@ -81,7 +100,7 @@
 
                 <p style="margin-top: 20px;font-size:x-small">
                     @Localizer["CreatedBy"] <a href="http://www.jarredcapellman.com" target="_blank">Jarred Capellman</a> | <a href="https://github.com/jcapellman/cwg" target="_blank">@Localizer["SourceCode"]</a><br />
-                    Version 2020.10.0
+                    Version 2020.11.0
                 </p>
             </div>
         </div>
@@ -109,6 +128,8 @@
     private void HandleValidSubmit()
     {
         _responseModel = GeneratorService.GenerateFile(_requestModel);
+
+        _responseModel.FullPath = $"{NavigationManager.BaseUri}file/{_responseModel.FileName}";
     }
 
     private IEnumerable<BaseGenerator> _generators;
@@ -136,5 +157,10 @@
         _requestModel = new GenerationRequestModel();
 
         _requestModel.FileType = _generators.FirstOrDefault().Name;
+    }
+
+    private async Task CopyTextToClipboard()
+    {
+        await CService.WriteTextAsync(_responseModel.FullPath);
     }
 }

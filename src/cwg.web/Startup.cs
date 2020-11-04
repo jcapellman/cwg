@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using cwg.web.Data;
 using cwg.web.Repositories;
+using cwg.web.Services;
 
 namespace cwg.web
 {
@@ -24,6 +25,8 @@ namespace cwg.web
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddScoped<ClipboardService>();
 
             services.AddSingleton(new GeneratorRepository());
             services.AddSingleton<GeneratorsService>();
