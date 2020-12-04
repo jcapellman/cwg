@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using cwg.web.Data;
 using cwg.web.Repositories;
 using cwg.web.Services;
+using NJsonSchema.Generation;
 
 namespace cwg.web
 {
@@ -30,6 +31,15 @@ namespace cwg.web
 
             services.AddSingleton(new GeneratorRepository());
             services.AddSingleton<GeneratorsService>();
+
+            services.AddControllers();
+
+            services.AddSwaggerDocument(a =>
+            {
+                a.Description = "Swagger documentation for the cwg services";
+
+                a.Title = "cwg";
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,6 +52,12 @@ namespace cwg.web
             app.UseDeveloperExceptionPage();
            
             app.UseStaticFiles();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3(a =>
+            {
+                a.DocumentTitle = "cwg";
+            });
 
             app.UseRouting();
 

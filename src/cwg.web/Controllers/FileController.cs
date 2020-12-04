@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 
+using cwg.web.Data;
+using cwg.web.Enums;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace cwg.web.Controllers
@@ -13,5 +16,23 @@ namespace cwg.web.Controllers
         {
             FileDownloadName = filename
         };
+
+        [Route("file/generate")]
+        public IActionResult Generate(string fileType, int numToGenerate = 1, bool bosartige = false, string injection = null, bool repack = false)
+        {
+            var gService = new GeneratorsService();
+
+            var response = gService.GenerateFile(new GenerationRequestModel
+            {
+                FileType = fileType,
+                NumberToGenerate = numToGenerate,
+                ThreatLevel = ThreatLevels.MALICIOUS.ToString(),
+                Bosartige = bosartige,
+                Injection = injection,
+                Repack = repack
+            });
+
+            return Index(response.FileName);
+        }
     }
 }
