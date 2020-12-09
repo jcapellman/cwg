@@ -100,6 +100,9 @@
     <None Update="sourceVBA">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="sourceVBE">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="sourceXLSM">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
