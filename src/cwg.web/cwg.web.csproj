@@ -73,6 +73,9 @@
     <None Update="sourceELFARM">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="sourceHTA">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="sourceMACHO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
