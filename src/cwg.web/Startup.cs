@@ -37,7 +37,7 @@ namespace cwg.web
             services.AddSwaggerDocument(a =>
             {
                 a.Description = "Swagger documentation for the cwg services";
-
+                a.Version = "1.0.1";
                 a.Title = "cwg";
             });
         }
