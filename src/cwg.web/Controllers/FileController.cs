@@ -18,7 +18,7 @@ namespace cwg.web.Controllers
         };
 
         [Route("file/generate")]
-        public IActionResult Generate(string fileType, int numToGenerate = 1, bool bosartige = false, string injection = null, bool repack = false)
+        public IActionResult Generate(string fileType, int numToGenerate = 1, bool bosartige = false, string injection = null, bool repack = false, ThreatLevels threatLevel = ThreatLevels.MALICIOUS)
         {
             var gService = new GeneratorsService();
 
@@ -26,7 +26,7 @@ namespace cwg.web.Controllers
             {
                 FileType = fileType,
                 NumberToGenerate = numToGenerate,
-                ThreatLevel = ThreatLevels.MALICIOUS.ToString(),
+                ThreatLevel = threatLevel.ToString(),
                 Bosartige = bosartige,
                 Injection = injection,
                 Repack = repack
