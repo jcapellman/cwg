@@ -97,72 +97,24 @@ namespace cwg.web.Generators
         {
             var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.docx");
 
-            if (model.ThreatLevelEnum == ThreatLevels.MALICIOUS)
+            File.Copy(Path.Combine(AppContext.BaseDirectory, "sourceDOCM"), fileName);
+
+            var originalBytes = File.ReadAllBytes(fileName);
+
+            var newBytes = new byte[GetRandomInt()];
+
+            FillArray(newBytes);
+
+            for (var y = 0; y < newBytes.Length; y++)
             {
-                File.Copy(Path.Combine(AppContext.BaseDirectory, "sourceDOCM"), fileName);
-
-                var originalBytes = System.IO.File.ReadAllBytes(fileName);
-
-                var newBytes = new byte[GetRandomInt()];
-
-                FillArray(newBytes);
-
-                for (var y = 0; y < newBytes.Length; y++)
-                {
-                    originalBytes[originalBytes.Length - 1 - y] = newBytes[y];
-                }
-
-                var bSha1Sum = ComputeSha1(originalBytes);
-
-                File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{bSha1Sum}.docx"), originalBytes);
-
-                return (bSha1Sum, $"{bSha1Sum}.docx");
+                originalBytes[originalBytes.Length - 1 - y] = newBytes[y];
             }
 
-            using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document, true))
-            {
-                var jqueryText = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "jquery.js"));
+            var bSha1Sum = ComputeSha1(originalBytes);
 
+            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{bSha1Sum}.docx"), originalBytes);
 
-                var mainPart = document.AddMainDocumentPart();
-
-                new Document(new Body()).Save(mainPart);
-
-                Body body = mainPart.Document.Body;
-                body.Append(new Paragraph(
-                    new Run(
-                        new Text($"cwg owned this document on {DateTime.Now} {System.Environment.NewLine}\r\n{jqueryText}"))));
-
-                for (var x = 0; x < 10; x++)
-                {
-                    body.Append(new Paragraph(new Run(new Text("https://wwww.jarredcapellman.com/"))));
-
-                    body.Append(new Paragraph(new Run(new Text($"http://btyl.io/{x}/"))));
-                }
-
-                for (var x = 0; x < 10; x++)
-                {
-                    ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
-
-                    using (FileStream stream = new FileStream(Path.Combine(AppContext.BaseDirectory, "embed.jpg"),
-                        FileMode.Open))
-                    {
-                        imagePart.FeedData(stream);
-
-                        AddImageToBody(document, mainPart.GetIdOfPart(imagePart));
-                    }
-                }
-
-                mainPart.Document.Save();
-            }
-        
-            var bytes = File.ReadAllBytes(fileName);
-
-            var sha1Sum = ComputeSha1(bytes);
-
-            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.docx"), bytes);
-
-            return (sha1Sum, $"{sha1Sum}.docx");
+            return (bSha1Sum, $"{bSha1Sum}.docx");
         }
     }
 }
