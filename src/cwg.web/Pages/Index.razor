@@ -29,7 +29,7 @@
                             <div class="form-group">
                                 <label for="fileType">@Localizer["SampleType"]</label>
 
-                                <InputSelect id="fileType" name="fileType" class="form-control dark" style="max-width: 200px; margin: 0 auto; text-align: center" @bind-CurrentValueAsString="_requestModel.FileType" @bind-Value="FileType">
+                                <InputSelect id="fileType" name="fileType" class="form-control dark" style="max-width: 250px; margin: 0 auto; text-align: center" @bind-CurrentValueAsString="_requestModel.FileType" @bind-Value="FileType">
                                     @foreach (var generator in _generators)
                                             {
                                         <option value="@generator.Name">@generator.Name</option>
@@ -100,7 +100,7 @@
 
                 <p style="margin-top: 20px;font-size:x-small">
                     @Localizer["CreatedBy"] <a href="http://www.jarredcapellman.com" target="_blank">Jarred Capellman</a> | <a href="https://github.com/jcapellman/cwg" target="_blank">@Localizer["SourceCode"]</a><br />
-                    Version 2020.12.2
+                    Version 2020.12.3
                 </p>
             </div>
         </div>
