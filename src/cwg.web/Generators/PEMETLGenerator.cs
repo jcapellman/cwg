@@ -11,9 +11,9 @@ namespace cwg.web.Generators
     {
         public override string Name => "PE32 (MET&L)";
 
-        protected override string SourceName => "sourcePE.exe";
+        protected override string SourceName => "sourcePEMTL";
 
-        protected override string OutputExtension => ".exe";
+        protected override string OutputExtension => "exe";
 
         public override bool Packable => false;
 
