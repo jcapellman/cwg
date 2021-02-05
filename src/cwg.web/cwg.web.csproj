@@ -30,7 +30,7 @@
     <PackageReference Include="iTextSharp">
       <Version>5.5.13.2</Version>
     </PackageReference>
-    <PackageReference Include="METL" Version="0.1.2" />
+    <PackageReference Include="METL" Version="0.1.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
 
