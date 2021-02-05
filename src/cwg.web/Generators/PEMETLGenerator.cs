@@ -26,11 +26,9 @@ namespace cwg.web.Generators
             var injectedBytes = METLInjector.InjectMalwareFromFile(sourceFile, malFile);
 
             var sha1Sum = ComputeSha1(injectedBytes);
-
-            var fileName = Path.Combine(AppContext.BaseDirectory, sha1Sum + OutputExtension);
-
-            File.WriteAllBytes(fileName, injectedBytes);
-
+            
+            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}"), injectedBytes);
+            
             return (sha1Sum, $"{sha1Sum}.{OutputExtension}");
         }
     }
