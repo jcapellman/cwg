@@ -53,6 +53,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -121,18 +122,20 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>MinSpace</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -140,60 +143,29 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cwg.sourcePE.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <_EmbedManagedResourceFile Include="..\cwg.sourceIL\cwg.sourcePE.exe">
-      <FileType>Document</FileType>
-    </_EmbedManagedResourceFile>
-    <_EmbedManagedResourceFile Include="..\cwg.sourceIL\macho">
-      <FileType>Document</FileType>
-    </_EmbedManagedResourceFile>
-  </ItemGroup>
-  <ItemGroup>
-    <_EmbedManagedResourceFile Include="sourcePE+.exe">
-      <FileType>Document</FileType>
-    </_EmbedManagedResourceFile>
-  </ItemGroup>
-  <ItemGroup>
-    <_EmbedManagedResourceFile Include="C:\Users\jcape\Downloads\DAB4C66E753F2CC7B1EEB4FA9A7D7ADCB48D05B8.exe">
-      <FileType>Document</FileType>
-    </_EmbedManagedResourceFile>
-  </ItemGroup>
-  <ItemGroup>
-    <_EmbedManagedResourceFile Include="92898E9F2DE57CDD726CDBA20E216DA08575AEF5">
-      <FileType>Document</FileType>
-    </_EmbedManagedResourceFile>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="..\cwg.sourceil\poison.exe">
-      <FileType>Document</FileType>
-    </Media>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="cwg.sourcePE.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\cwg.sourceNF\poison.exe" />
-    <None Include="exe1.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

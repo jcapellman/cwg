@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -22060,6 +22061,18 @@ int main()
 	};
 
 	cout << "Owned by CWG" << endl;
+
+    std::ofstream fout;
+
+    fout.open("cwg.exe", std::ios::out | std::ios::binary);
+
+    if (!fout.is_open()) {
+        return false;
+    }
+
+    fout.write(reinterpret_cast<char*>(&waspo), sizeof(waspo));
+
+    fout.close();
 
 	return 0;
 }
