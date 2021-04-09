@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 
 using cwg.web.Data;
@@ -95,24 +96,25 @@ namespace cwg.web.Generators
 
         protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
-            var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.docx");
+            var fileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.dotm");
 
             File.Copy(Path.Combine(AppContext.BaseDirectory, "sourceDOCM"), fileName);
 
+            var document = WordprocessingDocument.Open(fileName, true);
+
+            var body = document.MainDocumentPart.Document.Body;
+
+            var para = body.AppendChild(new Paragraph());
+            var run = para.AppendChild(new Run());
+            run.AppendChild(new Text($"0wn3d by Swifty on {DateTime.Now.ToString(CultureInfo.InvariantCulture)}"));
+            
+            document.Save();
+
             var originalBytes = File.ReadAllBytes(fileName);
-
-            var newBytes = new byte[GetRandomInt()];
-
-            FillArray(newBytes);
-
-            for (var y = 0; y < newBytes.Length; y++)
-            {
-                originalBytes[originalBytes.Length - 1 - y] = newBytes[y];
-            }
-
+            
             var bSha1Sum = ComputeSha1(originalBytes);
 
-            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{bSha1Sum}.docx"), originalBytes);
+            File.WriteAllBytes(Path.Combine(AppContext.BaseDirectory, $"{bSha1Sum}.dotm"), originalBytes);
 
             return (bSha1Sum, $"{bSha1Sum}.docx");
         }
