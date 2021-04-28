@@ -18,8 +18,8 @@ namespace cwg.web.Generators
 
         protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
-            var originalBytes = File.ReadAllBytes(SourceName);
-            var machioBytes = File.ReadAllBytes(SourceName);
+            var originalBytes = File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, SourceName));
+            var machioBytes = File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, SourceName));
 
             var newBytes = new byte[GetRandomInt()];
             
@@ -37,9 +37,7 @@ namespace cwg.web.Generators
             var filePath = Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}");
 
             File.WriteAllBytes(filePath, finalBytes);
-
-            Exec($"chmod 777 {filePath}");
-
+            
             return (sha1Sum, $"{sha1Sum}");
         }
     }
