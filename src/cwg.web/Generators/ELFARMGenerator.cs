@@ -6,6 +6,8 @@
 
         protected override string SourceName => "sourceELFARM";
 
+        protected override string CleanSourceName => "sourceCleanELFarm64";
+
         protected override string OutputExtension => "elf";
 
         public override bool Packable => true;

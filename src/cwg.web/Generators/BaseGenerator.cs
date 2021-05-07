@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 using cwg.web.Data;
+using cwg.web.Enums;
 
 namespace cwg.web.Generators
 {
@@ -29,6 +30,8 @@ namespace cwg.web.Generators
         public abstract string Name { get; }
 
         protected abstract string SourceName { get; }
+
+        protected abstract string CleanSourceName { get; }
 
         protected abstract string OutputExtension { get; }    
 
@@ -96,6 +99,28 @@ namespace cwg.web.Generators
             }
         }
 
+        private (string sha1, string fileName) GenerateClean()
+        {
+            var originalBytes = File.ReadAllBytes(CleanSourceName).ToList();
+            
+            var newBytes = new byte[GetRandomInt()];
+
+            FillArray(newBytes);
+
+            for (var y = 0; y < newBytes.Length; y++)
+            {
+                originalBytes[originalBytes.Count - 1 - y] = newBytes[y];
+            }
+
+            var sha1Sum = ComputeSha1(originalBytes.ToArray());
+
+            var fileName = Path.Combine(AppContext.BaseDirectory, $"{sha1Sum}.{OutputExtension}");
+
+            File.WriteAllBytes(fileName, originalBytes.ToArray());
+
+            return (sha1Sum, $"{sha1Sum}.{OutputExtension}");
+        }
+
         protected virtual (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var injectionBytes = new List<byte>();
@@ -139,6 +164,8 @@ namespace cwg.web.Generators
             LaunchProcess("/bin/bash", $"-c \"{escapedArgs}\"");
         }
 
+        protected virtual (string sha1, string fileName) GenerateFile(GenerationRequestModel model) => model.ThreatLevel == ThreatLevels.CLEAN.ToString() ? GenerateClean() : Generate(model);
+
         public (string sha1, string fileName) GenerateFiles(GenerationRequestModel model)
         {
             switch (model.NumberToGenerate)
@@ -146,14 +173,14 @@ namespace cwg.web.Generators
                 case 0:
                     return (null, null);
                 case 1:
-                    return Generate(model);
+                    return GenerateFile(model);
             }
 
             var fileNames = new List<string>();
 
             for (var x = 0; x < model.NumberToGenerate; x++)
             {
-                fileNames.Add(Generate(model).fileName);
+                fileNames.Add(GenerateFile(model).fileName);
             }
 
             var zipArchiveFileName = Path.Combine(AppContext.BaseDirectory, $"{DateTime.Now.Ticks}.zip");

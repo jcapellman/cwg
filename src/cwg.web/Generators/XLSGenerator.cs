@@ -13,6 +13,8 @@ namespace cwg.web.Generators
 
         protected override string SourceName => string.Empty;
 
+        protected override string CleanSourceName => "sourceCleanXLS.xls";
+
         protected override string OutputExtension => "xls";
 
         public override bool Packable => false;

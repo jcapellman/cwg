@@ -12,6 +12,8 @@ namespace cwg.web.Generators
 
         protected override string SourceName => "sourceMACHO";
 
+        protected override string CleanSourceName => "sourceCleanMacho";
+
         protected override string OutputExtension => ".macho";
 
         public override bool Packable => true;

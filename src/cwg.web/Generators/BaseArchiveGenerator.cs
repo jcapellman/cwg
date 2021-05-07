@@ -13,6 +13,8 @@ namespace cwg.web.Generators
 
         protected override string SourceName => "sourcePE.exe";
 
+        protected override string CleanSourceName => "dasarchive";
+
         protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var fileName = $"{DateTime.Now.Ticks}.{OutputExtension}";

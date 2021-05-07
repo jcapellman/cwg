@@ -15,6 +15,8 @@ namespace cwg.web.Generators
 
         protected override string SourceName => string.Empty;
 
+        protected override string CleanSourceName => "sourceCleanDOCX.docx";
+
         protected override string OutputExtension => "docx";
 
         public override bool Packable => false;

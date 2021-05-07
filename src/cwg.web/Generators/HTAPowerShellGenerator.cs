@@ -12,6 +12,8 @@ namespace cwg.web.Generators
 
         protected override string SourceName => "sourceHTAPS";
 
+        protected override string CleanSourceName => "sourceHTAPS";
+
         protected override string OutputExtension => "hta";
 
         public override bool Packable => false;

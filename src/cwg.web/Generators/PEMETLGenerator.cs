@@ -13,6 +13,8 @@ namespace cwg.web.Generators
 
         protected override string SourceName => "sourcePEMTL";
 
+        protected override string CleanSourceName => "sourcePEMTL";
+
         protected override string OutputExtension => "exe";
 
         public override bool Packable => false;

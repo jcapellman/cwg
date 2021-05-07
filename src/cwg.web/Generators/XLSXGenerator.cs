@@ -12,7 +12,11 @@ namespace cwg.web.Generators
     public class XLSXGenerator : BaseGenerator
     {
         public override string Name => "XLSM";
+        
         protected override string SourceName => "sourceXLSM";
+        
+        protected override string CleanSourceName => "sourceCleanXLSX.xlsx";
+
         protected override string OutputExtension => "xlsm";
 
         public override bool Packable => false;

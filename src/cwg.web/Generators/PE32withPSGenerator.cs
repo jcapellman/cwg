@@ -5,6 +5,8 @@
         public override string Name => "PE32 with PS Embedded";
 
         protected override string SourceName => "sourcePEwithPS.exe";
+        
+        protected override string CleanSourceName => "sourcePEwithPS.exe";
 
         protected override string OutputExtension => "exe";
 
