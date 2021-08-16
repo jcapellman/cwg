@@ -31,6 +31,8 @@ namespace cwg.web.Generators
 
         protected abstract string SourceName { get; }
 
+        public abstract bool Active { get; }
+
         protected abstract string CleanSourceName { get; }
 
         protected abstract string OutputExtension { get; }    

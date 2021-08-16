@@ -4,6 +4,8 @@
     {
         public override string Name => "ELF (x86)";
 
+        public override bool Active => true;
+
         protected override string SourceName => "sourceELF";
 
         protected override string CleanSourceName => "sourceCleanELFx64";

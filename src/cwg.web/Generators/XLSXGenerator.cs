@@ -12,7 +12,9 @@ namespace cwg.web.Generators
     public class XLSXGenerator : BaseGenerator
     {
         public override string Name => "XLSM";
-        
+
+        public override bool Active => true;
+
         protected override string SourceName => "sourceXLSM";
         
         protected override string CleanSourceName => "sourceCleanXLSX.xlsx";

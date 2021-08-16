@@ -11,6 +11,8 @@ namespace cwg.web.Generators
     {
         public override string Name => "PE32 (MET&L)";
 
+        public override bool Active => false;
+
         protected override string SourceName => "sourcePEMTL";
 
         protected override string CleanSourceName => "sourcePEMTL";

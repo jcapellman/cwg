@@ -11,6 +11,8 @@ namespace cwg.web.Generators
     {
         public override string Name => "XLS";
 
+        public override bool Active => true;
+
         protected override string SourceName => string.Empty;
 
         protected override string CleanSourceName => "sourceCleanXLS.xls";

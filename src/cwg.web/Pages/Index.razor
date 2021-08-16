@@ -50,16 +50,6 @@
                                         <option value="@level">@level</option>
                                             }
                                 </InputSelect>
-
-                                <br />
-
-                                <label for="injection">@Localizer["Injection"]</label><br />
-                                <InputTextArea rows="4" @bind-Value="_requestModel.Injection" id="injection" name="injection" />
-
-                                <br />
-
-                                <label for="repack">@Localizer["Repack"]</label>
-                                <InputCheckbox @bind-Value="_requestModel.Repack" id="repack" disabled="@PackDisable" name="repack" />
                             </div>
 
                             <div class="form-group">
@@ -100,7 +90,7 @@
 
                 <p style="margin-top: 20px;font-size:x-small">
                     @Localizer["CreatedBy"] <a href="http://www.jarredcapellman.com" target="_blank">Jarred Capellman</a> | <a href="https://github.com/jcapellman/cwg" target="_blank">@Localizer["SourceCode"]</a><br />
-                    Version 2021.8.0
+                    Version 2021.8.1
                 </p>
             </div>
         </div>

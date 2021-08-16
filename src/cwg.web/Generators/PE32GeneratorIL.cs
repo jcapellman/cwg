@@ -4,6 +4,8 @@
     {
         public override string Name => "PE32+ (IL)";
 
+        public override bool Active => false;
+
         protected override string SourceName => "sourcePE+IL.exe";
         
         protected override string CleanSourceName => "sourceCleanPE32.exe";

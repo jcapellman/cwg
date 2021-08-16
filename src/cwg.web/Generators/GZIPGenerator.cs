@@ -6,6 +6,8 @@ namespace cwg.web.Generators
     {
         public override string Name => "GZIP";
 
+        public override bool Active => true;
+
         protected override string OutputExtension => "gzip";
 
         protected override ArchiveType CurrentArchiveType => ArchiveType.GZip;

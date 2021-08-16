@@ -10,6 +10,8 @@ namespace cwg.web.Generators
     {
         public override string Name => "Mach-o";
 
+        public override bool Active => true;
+
         protected override string SourceName => "sourceMACHO";
 
         protected override string CleanSourceName => "sourceCleanMacho";

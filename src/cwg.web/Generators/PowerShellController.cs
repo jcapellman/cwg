@@ -11,6 +11,8 @@ namespace cwg.web.Generators
     {
         public override string Name => "Powershell";
 
+        public override bool Active => true;
+
         protected override string SourceName => "sourcePS.ps1";
         
         protected override string CleanSourceName => "sourceCleanPS.ps1";

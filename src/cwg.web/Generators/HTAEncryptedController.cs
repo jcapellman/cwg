@@ -10,6 +10,8 @@ namespace cwg.web.Generators
     {
         public override string Name => "HTA (Encrypted)";
 
+        public override bool Active => false;
+
         protected override string SourceName => "sourceHTA";
 
         protected override string CleanSourceName => "sourceHTA";

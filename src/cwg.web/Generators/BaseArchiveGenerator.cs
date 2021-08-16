@@ -11,6 +11,8 @@ namespace cwg.web.Generators
     {
         protected abstract ArchiveType CurrentArchiveType { get; }
 
+        public override bool Active => true;
+
         protected override string SourceName => "sourcePE.exe";
 
         protected override string CleanSourceName => "dasarchive";

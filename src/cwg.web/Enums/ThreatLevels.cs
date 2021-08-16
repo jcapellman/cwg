@@ -3,8 +3,6 @@
     public enum ThreatLevels
     {
         CLEAN,
-        ABNORMAL,
-        SUSPICIOUS,
         MALICIOUS
     }
 }

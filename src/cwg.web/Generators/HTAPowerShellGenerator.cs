@@ -16,6 +16,8 @@ namespace cwg.web.Generators
 
         protected override string OutputExtension => "hta";
 
+        public override bool Active => false;
+
         public override bool Packable => false;
 
         protected override (string sha1, string fileName) Generate(GenerationRequestModel model)

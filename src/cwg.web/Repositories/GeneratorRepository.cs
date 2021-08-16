@@ -18,9 +18,9 @@ namespace cwg.web.Repositories
 
         public static IEnumerable<BaseGenerator> GetGenerators()
         {
-            var baseGenerators = GetObjects<BaseGenerator>();
+            var baseGenerators = GetObjects<BaseGenerator>().Where(a => a.Active).ToList();
 
-            baseGenerators.AddRange(GetObjects<BaseArchiveGenerator>());
+            baseGenerators.AddRange(GetObjects<BaseArchiveGenerator>().Where(a => a.Active));
 
             return baseGenerators.OrderBy(a => a.Name);
         }

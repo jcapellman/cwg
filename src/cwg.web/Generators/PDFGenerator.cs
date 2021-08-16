@@ -12,6 +12,8 @@ namespace cwg.web.Generators
     {
         public override string Name => "PDF";
 
+        public override bool Active => false;
+
         protected override string SourceName => string.Empty;
 
         protected override string CleanSourceName => "sourceCleanPDF.pdf";

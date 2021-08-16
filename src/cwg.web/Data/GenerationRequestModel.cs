@@ -27,7 +27,7 @@ namespace cwg.web.Data
             NumberToGenerate = 1;
             Bosartige = true;
             Repack = false;
-            ThreatLevel = ThreatLevels.ABNORMAL.ToString();
+            ThreatLevel = ThreatLevels.MALICIOUS.ToString();
 
             SelectableThreatLevels = Enum.GetNames(typeof(ThreatLevels));
         }

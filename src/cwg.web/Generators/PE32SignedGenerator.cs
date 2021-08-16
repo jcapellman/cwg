@@ -4,6 +4,8 @@
     {
         public override string Name => "PE32 SIGNED";
 
+        public override bool Active => false;
+
         protected override string SourceName => "sourcePESIGNED.exe";
         
         protected override string CleanSourceName => "sourcePESIGNED.exe";

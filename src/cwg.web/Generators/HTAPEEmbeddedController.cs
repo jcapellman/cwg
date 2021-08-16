@@ -18,6 +18,8 @@ namespace cwg.web.Generators
 
         public override bool Packable => false;
 
+        public override bool Active => false;
+
         protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var sourceFile = File.ReadAllText(SourceName);

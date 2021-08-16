@@ -6,6 +6,8 @@ namespace cwg.web.Generators
     {
         public override string Name => "TAR";
 
+        public override bool Active => true;
+
         protected override string OutputExtension => "tar";
 
         public override bool Packable => false;

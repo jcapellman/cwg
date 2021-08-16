@@ -13,6 +13,8 @@ namespace cwg.web.Generators
     {
         public override string Name => "DOCX";
 
+        public override bool Active => false;
+
         protected override string SourceName => string.Empty;
 
         protected override string CleanSourceName => "sourceCleanDOCX.docx";
