@@ -44,7 +44,7 @@ namespace cwg.web.Generators
                 sheetId = sheets.Elements<Sheet>().Select(s => s.SheetId.Value).Max() + 1;
             }
 
-            Sheet sheet = new Sheet() { Id = relationshipId, SheetId = sheetId, Name = $"Owned by CWG on {DateTime.Now}" };
+            Sheet sheet = new() { Id = relationshipId, SheetId = sheetId, Name = $"Owned by CWG on {DateTime.Now}" };
             sheets.Append(sheet);
             
             spreadsheetDocument.Close();

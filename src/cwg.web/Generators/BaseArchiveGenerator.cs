@@ -19,8 +19,6 @@ namespace cwg.web.Generators
 
         protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
-            var fileName = $"{DateTime.Now.Ticks}.{OutputExtension}";
-
             var originalBytes = File.ReadAllBytes(SourceName);
 
             var newBytes = new byte[GetRandomInt()];
@@ -42,10 +40,9 @@ namespace cwg.web.Generators
 
             using (var zip = File.OpenWrite(archiveFileName))
             {
-                using (var zipWriter = WriterFactory.Open(zip, CurrentArchiveType, CompressionType.GZip))
-                {
-                    zipWriter.Write(sha1Sum, sourcePEPath);
-                }
+                using var zipWriter = WriterFactory.Open(zip, CurrentArchiveType, CompressionType.GZip);
+
+                zipWriter.Write(sha1Sum, sourcePEPath);
             }
 
             var sha1 = ComputeSha1(File.ReadAllBytes(archiveFileName));

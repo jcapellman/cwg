@@ -21,31 +21,6 @@ namespace cwg.web.Generators
 
         public override bool Packable => false;
 
-        private string encryptString(string sourceString, string key, string iv)
-        {
-            byte[] encrypted;
-
-            using (Aes aesAlg = Aes.Create())
-            {
-                var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-                using (var msEncrypt = new MemoryStream())
-                {
-                    using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (var swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(sourceString);
-                        }
-
-                        encrypted = msEncrypt.ToArray();
-                    }
-                }
-            }
-
-            return System.Convert.ToBase64String(encrypted, Base64FormattingOptions.None);
-        }
-
         protected override (string sha1, string fileName) Generate(GenerationRequestModel model)
         {
             var sourceFile = File.ReadAllText(SourceName);

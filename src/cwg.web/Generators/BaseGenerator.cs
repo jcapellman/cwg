@@ -14,7 +14,7 @@ namespace cwg.web.Generators
 {
     public abstract class BaseGenerator
     {
-        private string UPXPath
+        private static string UPXPath
         {
             get
             {
@@ -45,18 +45,16 @@ namespace cwg.web.Generators
 
         protected string ComputeSha1(byte[] bytes)
         {
-            using (var shaManager = new SHA1Managed())
-            {
-                return BitConverter.ToString(shaManager.ComputeHash(bytes)).Replace("-", "");
-            }
+            using var shaManager = new SHA1Managed();
+
+            return BitConverter.ToString(shaManager.ComputeHash(bytes)).Replace("-", "");
         }
 
         protected string ComputeSha1(string fileName)
         {
-            using (var shaManager = new SHA1Managed())
-            {
-                return BitConverter.ToString(shaManager.ComputeHash(File.ReadAllBytes(fileName))).Replace("-", "");
-            }
+            using var shaManager = new SHA1Managed();
+
+            return BitConverter.ToString(shaManager.ComputeHash(File.ReadAllBytes(fileName))).Replace("-", "");
         }
 
         private static void LaunchProcess(string fileName, string argument)
@@ -189,19 +187,17 @@ namespace cwg.web.Generators
 
             using (var fileStream = new FileStream(zipArchiveFileName, FileMode.CreateNew))
             {
-                using (var archive = new ZipArchive(fileStream, ZipArchiveMode.Create, true))
+                using var archive = new ZipArchive(fileStream, ZipArchiveMode.Create, true);
+
+                foreach (var fileName in fileNames)
                 {
-                    foreach (var fileName in fileNames)
-                    {
-                        var zipArchiveEntry = archive.CreateEntry(fileName, CompressionLevel.Fastest);
+                    var zipArchiveEntry = archive.CreateEntry(fileName, CompressionLevel.Fastest);
 
-                        using (var zipStream = zipArchiveEntry.Open())
-                        {
-                            var bytes = File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, fileName));
+                    using var zipStream = zipArchiveEntry.Open();
 
-                            zipStream.Write(bytes, 0, bytes.Length);
-                        }
-                    }                                    
+                    var bytes = File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, fileName));
+
+                    zipStream.Write(bytes, 0, bytes.Length);
                 }
             }
 

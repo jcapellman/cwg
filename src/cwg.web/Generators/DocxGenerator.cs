@@ -50,10 +50,8 @@ namespace cwg.web.Generators
 
                 return (bSha1Sum, $"{bSha1Sum}.docx");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                var te = ex;
-
                 return (null, null);
             }
         }
