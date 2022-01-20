@@ -135,6 +135,9 @@
     <None Update="sourcePE+IL.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="sourcePE32EDR.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="sourcePEMTL">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
