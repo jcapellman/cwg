@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBox1.Text" xml:space="preserve">
-    <value>You are panicking. You should be. You should have never ran this program because all your important files were encrypted. But here we are, you just messed up big time...again. You're most likely going to get fired. But there is a possiblity for salvation.  You can enter the magic word and your files will be decrypted. You'll find this magic word but not until your soul has been crushed and you have lost whatever little sanity you have left. Enter the password in the box below.</value>
+    <value>You are panicking. You should be. You should have never ran this program because all your important files were encrypted. But here we are, you just messed up big time...again. But there is a possiblity for salvation.  You can enter the magic word and your files will be decrypted. You'll find this magic word but not until your soul has been crushed and you have lost whatever little sanity you have left. Or just enter "ransombear" in the box below.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
