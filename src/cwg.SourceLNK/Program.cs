@@ -18,7 +18,7 @@ namespace cwg.SourceLNK
 
             object shDesktop = (object)"Desktop";
             WshShell shell = new WshShell();
-            string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\DarkMatters.lnk";
+            string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\sourceLNK.lnk";
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
             shortcut.Description = "Pwned by cwg";
             shortcut.TargetPath = destPs1;
