@@ -11,6 +11,7 @@ The idea behind this came up when testing whether or not an AV would alert on a 
 * Mach-O
 * PDF
 * PE32
+* PE32 (IL)
 * PE32+
 * Powershell
 * Tar
