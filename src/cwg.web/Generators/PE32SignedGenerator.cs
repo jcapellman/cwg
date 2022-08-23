@@ -6,9 +6,9 @@
 
         public override bool Active => true;
 
-        protected override string SourceName => "sourcePESIGNED.exe";
+        protected override string SourceName => "sourcePESigned";
         
-        protected override string CleanSourceName => "sourcePESIGNED.exe";
+        protected override string CleanSourceName => "sourcePESigned";
         
         protected override string OutputExtension => "exe";
 
