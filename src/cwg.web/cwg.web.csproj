@@ -126,6 +126,9 @@
 	<None Update="sourcePE">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
+	<None Update="sourcePE+Signed">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
     <None Update="sourcePE.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -140,6 +143,9 @@
     </None>
     <None Update="sourcePEMTL">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sourcePESigned">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="sourcePESIGNED.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
