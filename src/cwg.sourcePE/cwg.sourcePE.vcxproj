@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{52331974-83ce-4653-9a02-5542c36e0f67}</ProjectGuid>
+    <ProjectGuid>{7D7BBAD1-36BA-425E-B5B8-2482BADC49E1}</ProjectGuid>
     <RootNamespace>cwgsourcePE</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>

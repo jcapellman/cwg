@@ -13,3 +13,4 @@ src/Debug/*
 src/cwg.sourceDLL/x64/*
 src/cwg.sourcePE/x64/*
 src/cwg.web/wwwroot/lib/*
+/src/.vscode
