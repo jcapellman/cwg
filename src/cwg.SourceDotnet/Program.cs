@@ -43,7 +43,7 @@ namespace cwg.sourceDotnet
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
-            File.WriteAllText("testfile.txt", responseBody);
+            File.WriteAllText("FileToEncrypt.txt", responseBody);
 
             IEnumerable<string> directoryList = Directory.GetFiles(AppContext.BaseDirectory, "*txt", enumerationOptions);
             

@@ -21,20 +21,8 @@ namespace cwg.sourceDotnet
                 aesObject.Key = passwordBytes;
                 aesObject.IV = iv;
 
-                //ICryptoTransform encryptor = aesObject.CreateEncryptor();
-                byte[] test = aesObject.EncryptCbc(fileBytes, iv);
-                File.WriteAllBytes(filePath,test);
-                //using (MemoryStream mStream = new MemoryStream())
-                //{
-                //    using (CryptoStream cStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write))
-                //    {
-                //        using (StreamWriter sw = new StreamWriter(cStream))
-                //        {
-                //            sw.Write(fileBytes);
-                //        }
-                //        File.WriteAllBytes(filePath, mStream.ToArray());
-                //    }
-                //}
+                byte[] encrypted = aesObject.EncryptCbc(fileBytes, iv);
+                File.WriteAllBytes(filePath,encrypted);
             }
 
         }
@@ -54,22 +42,8 @@ namespace cwg.sourceDotnet
                 aesObject.Key = passwordBytes;
                 aesObject.IV = iv;
 
-                byte[] test = aesObject.DecryptCbc(fileBytes, iv);
-                File.WriteAllBytes(filePath, test);
-
-                //ICryptoTransform decryptor = aesObject.CreateDecryptor();
-
-                //using (MemoryStream mStream = new MemoryStream())
-                //{
-                //    using (CryptoStream cStream = new CryptoStream(mStream, decryptor, CryptoStreamMode.Read))
-                //    {
-                //        using (StreamReader sr = new StreamReader(cStream))
-                //        {
-                //            plainText = sr.ReadToEnd();
-                //        }
-                //        File.WriteAllBytes(filePath, mStream.ToArray());
-                //    }
-                //}
+                byte[] decrypted = aesObject.DecryptCbc(fileBytes, iv);
+                File.WriteAllBytes(filePath, decrypted);
             }
         }
     }
