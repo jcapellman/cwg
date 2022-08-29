@@ -1,0 +1,2 @@
+arm-linux-gnueabi-gcc main.cpp --static -o sourceELFARM
+upx sourceELF
