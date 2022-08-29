@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PublishSingleFile>true</PublishSingleFile>
-    <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>
+    <PublishSingleFile>false</PublishSingleFile>
+    <RuntimeIdentifier>linux-arm</RuntimeIdentifier>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
