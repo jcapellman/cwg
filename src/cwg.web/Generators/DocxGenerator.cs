@@ -40,7 +40,7 @@ namespace cwg.web.Generators
                 run.AppendChild(new Text($"0wn3d by Swifty on {DateTime.Now.ToString(CultureInfo.InvariantCulture)}"));
 
                 document.Save();
-                document.Close();
+                document.Dispose();
 
                 var originalBytes = File.ReadAllBytes(fileName);
 
