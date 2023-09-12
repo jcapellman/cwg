@@ -47,7 +47,7 @@ namespace cwg.web.Generators
             Sheet sheet = new() { Id = relationshipId, SheetId = sheetId, Name = $"Owned by CWG on {DateTime.Now}" };
             sheets.Append(sheet);
             
-            spreadsheetDocument.Close();
+            spreadsheetDocument.Dispose();
 
             spreadsheetDocument.Dispose();
             spreadsheetDocument = null;
