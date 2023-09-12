@@ -30,9 +30,7 @@ namespace cwg.web.Generators
 
         protected string ComputeSha1(byte[] bytes)
         {
-            using var shaManager = new SHA1Managed();
-
-            return BitConverter.ToString(shaManager.ComputeHash(bytes)).Replace("-", "");
+            return BitConverter.ToString(SHA1.HashData(bytes)).Replace("-", "");
         }
 
         protected string ComputeSha1(string fileName) => ComputeSha1(File.ReadAllBytes(fileName));
