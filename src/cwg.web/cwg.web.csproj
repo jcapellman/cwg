@@ -30,7 +30,7 @@
     <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
     <PackageReference Include="METL" Version="0.1.4" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
     <PackageReference Include="NLog" Version="5.2.4" />
 	  <PackageReference Include="NLog.Extensions.Logging" Version="5.3.4" />
 	  <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.4" />
