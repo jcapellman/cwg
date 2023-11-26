@@ -17,7 +17,3 @@ The idea behind this came up when testing whether or not an AV would alert on a 
 * Tar
 * XLS
 * XLSM
-
-#### Future Features: ####
-* Configurable output (More suspicious vs More obscure)
-* Additional File Types
