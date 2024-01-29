@@ -56,7 +56,7 @@ namespace cwg.web
             app.UseOpenApi(configure => configure.PostProcess = (document, _) 
                 => document.Schemes = new[] { NSwag.OpenApiSchema.Https });
 
-            app.UseSwaggerUi3(a =>
+            app.UseSwaggerUi(a =>
             {
                 a.DocumentTitle = "cwg";
             });
