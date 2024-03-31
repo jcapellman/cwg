@@ -25,7 +25,7 @@
   <ItemGroup>
     <PackageReference Include="BouncyCastle.Cryptography" Version="2.3.0" />
     <PackageReference Include="DocumentFormat.OpenXml">
-      <Version>3.0.1</Version>
+      <Version>3.0.2</Version>
     </PackageReference>
     <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
     <PackageReference Include="METL" Version="0.1.4" />
@@ -34,7 +34,7 @@
     <PackageReference Include="NLog" Version="5.2.8" />
 	  <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
 	  <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.8" />
-	  <PackageReference Include="NSwag.AspNetCore" Version="14.0.3" />
+	  <PackageReference Include="NSwag.AspNetCore" Version="14.0.7" />
     <PackageReference Include="SharpCompress" Version="0.36.0" />
     <PackageReference Include="System.IO.Compression.ZipFile">
       <Version>4.3.0</Version>
