@@ -2,5 +2,4 @@
 env: flex
 
 runtime_config:
-    runtime_version: "8"
-    operating_system: "ubuntu22"
+    operating_system: ubuntu22
